@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FontAwesome} from '@expo/vector-icons';
+import { FontAwesome, FontAwesome6} from '@expo/vector-icons';
 import { styles } from './estilos';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View } from 'react-native';
@@ -37,7 +37,7 @@ export default function Usuario({ SucessoLogin }: { SucessoLogin: () => void }) 
                 <Screen name='Login' options={{
                     headerShown: false,
                     tabBarIcon: (screenProps: any) => 
-                        <FontAwesome name='motorcycle' size={screenProps.size} color={screenProps.color}/>
+                        <FontAwesome6 name='person-shelter' size={screenProps.size} color={screenProps.color}/>
                     }}>
                     {({navigation}:{navigation:any}) => ( <Login onLogin={logar} navigation={navigation} />)}
                 </Screen> 

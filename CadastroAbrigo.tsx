@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ToastAndroid, TouchableOpacity } from 'react-native';
-// Se estiver usando expo, para copiar para a área de transferência:
 import * as Clipboard from 'expo-clipboard';
 
 interface AbrigoFormData {
@@ -10,7 +9,7 @@ interface AbrigoFormData {
     responsaveis: string;
 }
 
-export default function Abrigo() {
+export default function CadastroAbrigo() {
     const [form, setForm] = useState<AbrigoFormData>({
         nome: '',
         localizacao: '',
@@ -19,22 +18,71 @@ export default function Abrigo() {
     });
     const [abrigoId, setAbrigoId] = useState<string | null>(null);
 
+
     function gerarIdAleatorio() {
-        // Gera um número aleatório de até 5 dígitos
         return Math.floor(10000 + Math.random() * 90000).toString();
     }
 
-    const handleSubmit = () => {
-        const novoId = gerarIdAleatorio();
-        setAbrigoId(novoId);
-        ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.LONG);
-        setForm({
-            nome: '',
-            localizacao: '',
-            capacidadeMaxima: 0,
-            responsaveis: '',
-        });
+    const geocodeAddress = async (endereco: string) => {
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(endereco)}&format=json`, {
+                headers: {
+                    'User-Agent': 'SmartAbrigoApp/1.0 (contato@exemplo.com)',
+                    'Accept-Language': 'pt-BR'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro na resposta do servidor: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Resposta do geocode:', data);
+
+            if (data.length > 0) {
+                return {
+                    latitude: parseFloat(data[0].lat),
+                    longitude: parseFloat(data[0].lon),
+                };
+            } else {
+                throw new Error("Endereço não encontrado");
+            }
+        } catch (error) {
+            console.error('Erro no geocode:', error);
+            throw error;
+        }
     };
+
+    const handleSubmit = async () => {
+        if (!form.nome || !form.localizacao || !form.capacidadeMaxima || !form.responsaveis) {
+            ToastAndroid.show('Preencha todos os campos', ToastAndroid.SHORT);
+            return;
+        }
+        
+        if (isNaN(form.capacidadeMaxima) || form.capacidadeMaxima <= 0) {
+            ToastAndroid.show('Digite um número válido para capacidade', ToastAndroid.SHORT);
+            return;
+        }
+
+        try {
+            const coordenadas = await geocodeAddress(form.localizacao);
+            const novoAbrigo = {
+                id: gerarIdAleatorio(),
+                nome: form.nome,
+                capacidade: form.capacidadeMaxima,
+                responsaveis: form.responsaveis,
+                latitude: coordenadas.latitude,
+                longitude: coordenadas.longitude,
+                ocupado: 0,
+            };
+            console.log(novoAbrigo);
+            setAbrigoId(novoAbrigo.id);
+            ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.LONG);
+        } catch (e) {
+            ToastAndroid.show('Erro ao obter localização', ToastAndroid.LONG);
+        }
+    };
+
 
     const copiarId = async () => {
         if (abrigoId) {
@@ -84,6 +132,7 @@ export default function Abrigo() {
                 />
             </View>
             <Button title="Cadastrar" onPress={handleSubmit} />
+
 
             {abrigoId && (
                 <View style={{ marginTop: 24, alignItems: 'center' }}>
