@@ -5,6 +5,7 @@ import { styles } from './estilos';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Mapa from './Mapa';
 import Dashboard from './Dashboard';
+import InfoAbrigo from './InfoAbrigo';
 
 
 const {Navigator, Screen} = createDrawerNavigator();
@@ -28,11 +29,17 @@ export default function Logado() {
                         <Dashboard {...navProps} />
                     )}
                 </Screen>
-                {/* <Screen name="Mapa">
+                <Screen name="Mapa">
                     {(navProps: any) => (
                         <Mapa {...navProps} />
                     )}
-                </Screen> */}
+                </Screen>
+                <Screen name="Informações do Abrigo">
+                    {(navProps: any) => (
+                        <InfoAbrigo {...navProps} />
+                    )}
+                </Screen>
+
             </Navigator>
             <StatusBar style="auto" />
         </View>

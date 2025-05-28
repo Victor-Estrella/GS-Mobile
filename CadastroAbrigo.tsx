@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ToastAndroid, TouchableOpacity } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
+import axios from 'axios';
 
 interface AbrigoFormData {
     nome: string;
@@ -25,24 +26,21 @@ export default function CadastroAbrigo() {
 
     const geocodeAddress = async (endereco: string) => {
         try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(endereco)}&format=json`, {
+            const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+                params: {
+                    q: endereco,
+                    format: 'json',
+                },
                 headers: {
                     'User-Agent': 'SmartAbrigoApp/1.0 (contato@exemplo.com)',
-                    'Accept-Language': 'pt-BR'
+                    'Accept-Language': 'pt-BR',
                 }
             });
-
-            if (!response.ok) {
-                throw new Error(`Erro na resposta do servidor: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log('Resposta do geocode:', data);
-
-            if (data.length > 0) {
+        
+            if (response.data.length > 0) {
                 return {
-                    latitude: parseFloat(data[0].lat),
-                    longitude: parseFloat(data[0].lon),
+                    latitude: parseFloat(response.data[0].lat),
+                    longitude: parseFloat(response.data[0].lon),
                 };
             } else {
                 throw new Error("Endereço não encontrado");
@@ -107,7 +105,7 @@ export default function CadastroAbrigo() {
                 <Text>Localização:</Text>
                 <TextInput
                     style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }}
-                    placeholder="Localização"
+                    placeholder="Ex: Avenida Paulista, 1578, São Paulo, Brasil"
                     value={form.localizacao}
                     onChangeText={value => setForm(prev => ({ ...prev, localizacao: value }))}
                 />
