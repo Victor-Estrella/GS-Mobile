@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
-import { FontAwesome, FontAwesome6} from '@expo/vector-icons';
-import { styles } from './estilos';
+import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Cadastro } from './Cadastro';
-import { Login } from './Login';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { styles } from './styles/estilos';
+import { Cadastro } from './telas/Cadastro';
+import { Login } from './telas/Login';
+import ListaCadastro from './types/CadastroTipo';
 
 
-const {Navigator, Screen} = createBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function Usuario({ SucessoLogin }: { SucessoLogin: () => void }) {
-    const [cadastro, setCadastro] = useState<any[]>([]);
+    const [cadastro, setCadastro] = useState<ListaCadastro[]>([]);
 
-    const logar = (nome : string, senha: string) => { 
-            SucessoLogin();
+    const logar = (nome: string, senha: string) => {
+        SucessoLogin();
     }
 
 
-    const cadastrar = (nome : string, email:string, senha: string) => {
-        const obj = {nome, email, senha};
+    const cadastrar = (nome: string, email: string, senha: string) => {
+        const obj = { nome, email, senha };
         setCadastro([...cadastro, obj])
     }
 
@@ -30,17 +31,17 @@ export default function Usuario({ SucessoLogin }: { SucessoLogin: () => void }) 
                 <Screen name='Cadastro' options={{
                     headerShown: false,
                     tabBarIcon: (screenProps: any) =>
-                        <FontAwesome name='wpforms' size={screenProps.size} color={screenProps.color}/>
-                    }}>
-                    {({ navigation }: { navigation: any }) => ( <Cadastro onCadastro={cadastrar} navigation={navigation} />)}
+                        <FontAwesome name='wpforms' size={screenProps.size} color={screenProps.color} />
+                }}>
+                    {({ navigation }: { navigation: any }) => (<Cadastro onCadastro={cadastrar} navigation={navigation} />)}
                 </Screen>
                 <Screen name='Login' options={{
                     headerShown: false,
-                    tabBarIcon: (screenProps: any) => 
-                        <FontAwesome6 name='person-shelter' size={screenProps.size} color={screenProps.color}/>
-                    }}>
-                    {({navigation}:{navigation:any}) => ( <Login onLogin={logar} navigation={navigation} />)}
-                </Screen> 
+                    tabBarIcon: (screenProps: any) =>
+                        <FontAwesome6 name='person-shelter' size={screenProps.size} color={screenProps.color} />
+                }}>
+                    {({ navigation }: { navigation: any }) => (<Login onLogin={logar} navigation={navigation} />)}
+                </Screen>
             </Navigator>
             <StatusBar style="auto" />
         </View>
