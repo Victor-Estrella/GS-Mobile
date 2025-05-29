@@ -6,7 +6,7 @@ export default function Configuracoes() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [localizacao, setLocalizacao] = useState("");
-    const navigation = useNavigation();
+    const navigation = useNavigation() as any;
     const handleSalvar = () => {
         if (!nome.trim() || !email.trim()) {
             Alert.alert("Atenção", "Por favor, preencha nome e email para atualizar.");
@@ -28,10 +28,9 @@ export default function Configuracoes() {
                         Alert.alert("Conta excluída", "Sua conta foi excluída com sucesso.", [
                             {
                                 text: "OK",
-                                onPress: () => navigation.reset({
-                                    index: 0,
-                                    routes: [{ name: "Login" }],
-                                }),
+                                onPress: () => {
+                                    navigation.navigate("Deslogado");
+                                }
                             },
                         ]);
                     }
@@ -44,35 +43,14 @@ export default function Configuracoes() {
         <View style={styles.container}>
             <Text style={styles.titulo}>Configurações</Text>
             <Text>Nome:</Text>
-            <TextInput
-                style={styles.input}
-                value={nome}
-                onChangeText={setNome}
-                placeholder="Digite seu nome"
-            />
+            <TextInput style={styles.input} value={nome} onChangeText={setNome} placeholder="Digite seu nome"/>
             <Text>Email:</Text>
-            <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Digite seu email"
-                keyboardType="email-address"
-                autoCapitalize="none"
-            />
+            <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Digite seu email" keyboardType="email-address" autoCapitalize="none"/>
             <Text>Localização (opcional):</Text>
-            <TextInput
-                style={styles.input}
-                value={localizacao}
-                onChangeText={setLocalizacao}
-                placeholder="Digite sua localização"
-            />
+            <TextInput style={styles.input} value={localizacao} onChangeText={setLocalizacao} placeholder="Digite sua localização"/>
             <Button title="Salvar Alterações" onPress={handleSalvar} />
             <View style={styles.divisor} />
-            <Button
-                title="Excluir Conta"
-                color="red"
-                onPress={handleExcluirConta}
-            />
+            <Button title="Excluir Conta" color="red" onPress={handleExcluirConta}/>
         </View>
     );
 }

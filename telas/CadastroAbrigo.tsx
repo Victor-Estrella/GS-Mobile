@@ -94,40 +94,23 @@ export default function CadastroAbrigo() {
             <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16 }}>Cadastro de Abrigo</Text>
             <View style={{ marginBottom: 12 }}>
                 <Text>Nome:</Text>
-                <TextInput
-                    style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }}
-                    placeholder="Nome"
-                    value={form.nome}
-                    onChangeText={value => setForm(prev => ({ ...prev, nome: value }))}
-                />
+                <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Nome" value={form.nome}
+                onChangeText={value => setForm(prev => ({ ...prev, nome: value }))}/>
             </View>
             <View style={{ marginBottom: 12 }}>
                 <Text>Localização:</Text>
-                <TextInput
-                    style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }}
-                    placeholder="Ex: Avenida Paulista, 1578, São Paulo, Brasil"
-                    value={form.localizacao}
-                    onChangeText={value => setForm(prev => ({ ...prev, localizacao: value }))}
-                />
+                <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Ex: Avenida Paulista, 1578, São Paulo, Brasil" value={form.localizacao}
+                onChangeText={value => setForm(prev => ({ ...prev, localizacao: value }))}/>
             </View>
             <View style={{ marginBottom: 12 }}>
                 <Text>Capacidade Máxima:</Text>
-                <TextInput
-                    style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }}
-                    placeholder="Capacidade Máxima"
-                    value={form.capacidadeMaxima.toString()}
-                    onChangeText={value => setForm(prev => ({ ...prev, capacidadeMaxima: Number(value) }))}
-                    keyboardType="numeric"
-                />
+                <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Capacidade Máxima" value={form.capacidadeMaxima.toString()}
+                onChangeText={value => setForm(prev => ({ ...prev, capacidadeMaxima: Number(value) }))} keyboardType="numeric"/>
             </View>
             <View style={{ marginBottom: 12 }}>
                 <Text>Responsáveis:</Text>
-                <TextInput
-                    style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }}
-                    placeholder="Responsáveis"
-                    value={form.responsaveis}
-                    onChangeText={value => setForm(prev => ({ ...prev, responsaveis: value }))}
-                />
+                <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Responsáveis" value={form.responsaveis}
+                onChangeText={value => setForm(prev => ({ ...prev, responsaveis: value }))}/>
             </View>
             <Button title="Cadastrar" onPress={handleSubmit} />
 
