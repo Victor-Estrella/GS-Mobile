@@ -9,149 +9,120 @@ const styles = StyleSheet.create({
   },
 
   // Formulário de Autenticação (Cadastro e Login)
-  viewInputAutenticacao: {
-    marginTop: 40,
-    marginBottom: 12,
+  bg: {
+    flex: 1,
+    backgroundColor: "#81C784",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  inputAutenticacao: {
-    backgroundColor: 'gray',
-    borderRadius: 7,
-    padding: 4,
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 300,
+  card: {
+    width: "80%",
+    maxWidth: 400,
+    backgroundColor: "#fff",
+    borderRadius: 28,
+    overflow: "hidden",
+    alignItems: "center",
+    marginVertical: 32,
+  },
+  header: {
+    width: "100%",
+    paddingVertical: 24,
+    alignItems: "center",
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
   },
   tituloAutenticacao: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    marginTop: 32,
-    color: '#00b131'
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: "bold",
+    letterSpacing: 1,
+  },
+  form: {
+    width: "100%",
+    padding: 24,
+    alignItems: "center",
+  },
+  inputAutenticacao: {
+    width: "100%",
+    backgroundColor: "#ECECEC",
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 18,
+    fontSize: 16,
+    color: "#222",
+    fontFamily: "Inter",
+    minHeight: 50,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+  },
+  button: {
+    width: "100%",
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: "center",
+    marginTop: 12,
+    backgroundColor: "#1E88E5",
   },
   buttonTextAutenticacao: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: 10,
-    color: "white",
-  },
-
-  // Formulário de Cadastro de Motos
-  viewInputFormulario: {
-    flexDirection: 'column',
-    marginTop: 12,
-  },
-  input: {
-    backgroundColor: '#5D5D5D',
-    borderRadius: 8,
-    padding: 4,
-    color: 'white',
-    fontSize: 18,
-  },
-  labelFormulario: {
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 200,
-  },
-  tituloFormulario: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginVertical: 24,
-    color: '#00b131',
-    textAlign: 'center',
-  },
-  botao: {
-    borderRadius: 16,
-    marginTop: 42,
-    backgroundColor: 'green'
-  },
-  botaoTexto: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: 10,
-    color: "white",
-  },
-
-
-  // Listagem de Motos
-  tabelaContainer: {
-    padding: 16,
-    minWidth: 400
-  },
-  tituloTabela: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 12,
-    textAlign: "center",
-    color: "#00b131"
-  },
-  cabecalhoTabela: {
-    flexDirection: "row",
-    backgroundColor: "#eee",
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
-  },
-  cabecalhoTextoTabela: {
-    flex: 1,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  linhaTabela: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#333",
-    paddingVertical: 8,
-  },
-  objetosTabela: {
-    flex: 1,
-    textAlign: "center",
-    color: "white",
-  },
-  pressableDetalhesTabela: {
-    flex: 1,
-    alignItems: "center",
-  },
-  botaoDetalhes: {
-    backgroundColor: "green",
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  botaoTextoDetalhes: {
     color: "#fff",
-    fontSize: 12,
+    fontWeight: "bold",
+    fontSize: 18,
+    letterSpacing: 1,
   },
 
-
-  // Configurações
-  containerConfig: {
-    flex: 1,
+  // Formulário de Informações do Abrigo
+  cardInfo: {
+    width: "80%",
+    maxWidth: 420,
+    height: 650,
+    backgroundColor: "#fff",
+    borderRadius: 28,
+    overflow: "hidden",
+    alignItems: "center",
+    marginVertical: 32,
+  },
+  headerInfo: {
+    width: "100%",
+    paddingVertical: 24,
+    alignItems: "center",
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+  },
+  formInfo: {
+    width: "100%",
+    alignItems: "center",
     padding: 24,
-    backgroundColor: '#000',
+    paddingBottom: 40,
   },
-  tituloConfig: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 32,
-    textAlign: 'center',
-    color: '#00b131',
-  },
-  inputConfig: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
+  inputInfo: {
+    width: "100%",
+    backgroundColor: "#ECECEC",
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 12,
     fontSize: 16,
-    color: 'white',
+    color: "#222",
   },
-  deleteConfig: {
-    marginTop: 32,
-    flexDirection: 'row',
-    alignSelf: 'center'
+  addLink: {
+    color: "#1E88E5",
+    fontSize: 15,
+    marginBottom: 30,
+    fontWeight: "500",
+  },
+  buttonInfo: {
+    width: "100%",
+    backgroundColor: "#1E88E5",
+    borderRadius: 16,
+    alignItems: "center",
+    paddingVertical: 16,
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  buttonTextInfo: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 22,
+    letterSpacing: 1,
   },
 });
 

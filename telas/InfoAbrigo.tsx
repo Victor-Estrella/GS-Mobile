@@ -1,89 +1,90 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ToastAndroid, TouchableOpacity, ScrollView } from 'react-native';
-
-interface AbrigoFormData {
-    pessoas: number;
-    alimentos: string[];
-    agua: number;
-    roupas: string;
-    medicamentos: string;
-}
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { styles } from '../styles/estilos';
 
 export default function InfoAbrigo() {
-    const [form, setForm] = useState<AbrigoFormData>({
-        pessoas: 0,
-        alimentos: [''],
-        agua: 0,
-        roupas: '',
-        medicamentos: '',
-    });
+    const [pessoas, setPessoas] = useState('');
+    const [alimentos, setAlimentos] = useState<string[]>(['']);
+    const [agua, setAgua] = useState('');
+    const [roupas, setRoupas] = useState<string[]>(['']);
+    const [medicamentos, setMedicamentos] = useState<string[]>(['']);
 
-    const handleAddAlimento = () => {
-        setForm(prev => ({ ...prev, alimentos: [...prev.alimentos, ''] }));
+    const handleAddAlimento = () => setAlimentos(prev => [...prev, '']);
+    const handleAlimentoChange = (value: string, idx: number) => {
+        const novos = [...alimentos];
+        novos[idx] = value;
+        setAlimentos(novos);
     };
 
-    const handleAlimentoChange = (value: string, idx: number) => {
-        const novosAlimentos = [...form.alimentos];
-        novosAlimentos[idx] = value;
-        setForm(prev => ({ ...prev, alimentos: novosAlimentos }));
+    const handleAddRoupa = () => setRoupas(prev => [...prev, '']);
+    const handleRoupaChange = (value: string, idx: number) => {
+        const novos = [...roupas];
+        novos[idx] = value;
+        setRoupas(novos);
+    };
+
+    const handleAddMedicamento = () => setMedicamentos(prev => [...prev, '']);
+    const handleMedicamentoChange = (value: string, idx: number) => {
+        const novos = [...medicamentos];
+        novos[idx] = value;
+        setMedicamentos(novos);
     };
 
     const handleSubmit = async () => {
-        if (!form.pessoas || form.alimentos.some(alimento => !alimento.trim()) || !form.agua || !form.roupas || !form.medicamentos) {
-            ToastAndroid.show('Preencha todos os campos', ToastAndroid.SHORT);
+        if (
+            !pessoas ||
+            alimentos.some(a => !a.trim()) ||
+            !agua ||
+            roupas.some(r => !r.trim()) ||
+            medicamentos.some(m => !m.trim())
+        ) {
+            alert('Preencha todos os campos');
             return;
         }
-
-        try {
-            const novoAbrigo = {
-                pessoas: form.pessoas,
-                alimentos: form.alimentos,
-                agua: form.agua,
-                roupas: form.roupas,
-                medicamentos: form.medicamentos,
-            };
-            ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.LONG);
-        } catch (e) {
-            ToastAndroid.show('Erro ao cadastrar', ToastAndroid.LONG);
-        }
+        alert('Cadastro realizado com sucesso!');
     };
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View style={{ maxWidth: 400, marginHorizontal: 'auto', padding: 16, flex: 1 }}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16 }}>Cadastro de Abrigo</Text>
-                <View style={{ marginBottom: 12 }}>
-                    <Text>Pessoas abrigadas:</Text>
-                    <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8, marginBottom: 6 }} placeholder="Quantidade de pessoas"
-                    value={form.pessoas.toString()} onChangeText={value => setForm(prev => ({ ...prev, pessoas: Number(value) }))} keyboardType="numeric"/>
-                </View>
-                <View style={{ marginBottom: 12 }}>
-                    <Text>Alimentos:</Text>
-                    {form.alimentos.map((alimento, idx) => (
-                        <TextInput key={idx} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8, marginBottom: 6 }} placeholder={`Alimento ${idx + 1}`}
-                        value={alimento} onChangeText={value => handleAlimentoChange(value, idx)}/>
-                    ))}
-                    <TouchableOpacity onPress={handleAddAlimento} style={{ marginTop: 4, marginBottom: 4 }}>
-                        <Text style={{ color: '#007bff' }}>+ Adicionar alimento</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ marginBottom: 12 }}>
-                    <Text>Água (em litros):</Text>
-                    <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Litros disponíveis" value={form.agua.toString()}
-                    onChangeText={value => setForm(prev => ({ ...prev, agua: Number(value) }))} keyboardType="numeric"/>
-                </View>
-                <View style={{ marginBottom: 12 }}>
-                    <Text>Roupas:</Text>
-                    <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Roupas disponíveis" value={form.roupas}
-                    onChangeText={value => setForm(prev => ({ ...prev, roupas: value }))}/>
-                </View>
-                <View style={{ marginBottom: 12 }}>
-                    <Text>Medicamentos:</Text>
-                    <TextInput style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 4, padding: 8 }} placeholder="Medicamentos disponíveis" value={form.medicamentos}
-                    onChangeText={value => setForm(prev => ({ ...prev, medicamentos: value }))}/>
-                </View>
-                <Button title="Cadastrar" onPress={handleSubmit} />
+        <View style={styles.bg}>
+            <View style={styles.cardInfo}>
+                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.headerInfo}>
+                    <Text style={styles.tituloAutenticacao}>CADASTRO DE ABRIGO</Text>
+                </LinearGradient>
+                    <ScrollView contentContainerStyle={styles.formInfo} style={{ flex: 1, width: "100%" }} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+                        <TextInput style={styles.inputInfo} placeholder="Pessoas Abrigadas" placeholderTextColor="#B9B6B6" value={pessoas} onChangeText={setPessoas} keyboardType="numeric"/>
+                        
+                        
+                        {alimentos.map((alimento, idx) => (
+                            <TextInput key={idx} style={styles.inputInfo} placeholder="Alimentos" placeholderTextColor="#B9B6B6" value={alimento} onChangeText={value => handleAlimentoChange(value, idx)}/>
+                        ))}
+                        <TouchableOpacity onPress={handleAddAlimento}>
+                            <Text style={styles.addLink}>+ Adicionar alimento</Text>
+                        </TouchableOpacity>
+
+
+                        <TextInput style={styles.inputInfo} placeholder="Litros disponíveis" placeholderTextColor="#B9B6B6" value={agua} onChangeText={setAgua} keyboardType="numeric"/>
+                        {roupas.map((roupa, idx) => (
+                            <TextInput key={idx} style={styles.inputInfo} placeholder="Roupas" placeholderTextColor="#B9B6B6" value={roupa} onChangeText={value => handleRoupaChange(value, idx)}/>
+                        ))}
+                        <TouchableOpacity onPress={handleAddRoupa}>
+                            <Text style={styles.addLink}>+ Adicionar roupa</Text>
+                        </TouchableOpacity>
+
+
+                        {medicamentos.map((med, idx) => (
+                            <TextInput key={idx} style={styles.inputInfo} placeholder="Medicamentos" placeholderTextColor="#B9B6B6" value={med} onChangeText={value => handleMedicamentoChange(value, idx)}/>
+                        ))}
+                        <TouchableOpacity onPress={handleAddMedicamento}>
+                            <Text style={styles.addLink}>+ Adicionar medicamento</Text>
+                        </TouchableOpacity>
+
+
+                        <Pressable style={styles.button} onPress={handleSubmit}>
+                            <Text style={styles.buttonTextAutenticacao}>CADASTRAR</Text>
+                        </Pressable>
+                    </ScrollView>
             </View>
-        </ScrollView>
+        </View>
     );
 }

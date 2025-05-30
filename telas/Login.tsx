@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { styles } from "../styles/estilos";
 import BotaoProps from "../types/BotaoTipo";
+import { LinearGradient } from "expo-linear-gradient";
 
 
 interface LoginProps {
@@ -14,20 +15,18 @@ const Login = (props: LoginProps): React.ReactElement => {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.tituloAutenticacao}>Login</Text>
-            </View>
-            <View style={{ flex: 3, width: '50%' }}>
-                <View style={styles.viewInputAutenticacao}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor='white' placeholder="Email" value={email} onChangeText={setEmail} />
+        <View style={styles.bg}>
+            <View style={styles.card}>
+                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.header}>
+                    <Text style={styles.tituloAutenticacao}>LOGIN</Text>
+                </LinearGradient>
+                <View style={styles.form}>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Email" value={email} onChangeText={setEmail}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry/>
+                    <Botao title="ENTRAR" onPress={() => {
+                        props.onLogin(email, senha)
+                    }}/>
                 </View>
-                <View style={styles.viewInputAutenticacao}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor='white' placeholder="Senha" value={senha} onChangeText={setSenha} />
-                </View>
-                <Botao title="Entrar" onPress={() => {
-                    props.onLogin(email, senha)
-                }} />
             </View>
         </View>
     )
@@ -37,8 +36,8 @@ const Login = (props: LoginProps): React.ReactElement => {
 
 function Botao(props: BotaoProps) {
     return (
-        <Pressable onPress={props.onPress}>
-            <View style={{ borderRadius: 16, marginTop: 42, backgroundColor: 'green' }} >
+        <Pressable onPress={props.onPress} style={{ width: "100%" }}>
+            <View style={styles.button}>
                 <Text style={styles.buttonTextAutenticacao}>
                     {props.title}
                 </Text>

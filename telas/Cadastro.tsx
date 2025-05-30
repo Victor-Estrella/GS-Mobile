@@ -1,8 +1,9 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
-import { styles } from "../styles/estilos";
+import { Pressable, Text, TextInput, View, StyleSheet } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
 import BotaoProps from "../types/BotaoTipo";
+import { styles } from "../styles/estilos";
 
 interface CadastroProps {
     navigation: NavigationProp<ParamListBase>;
@@ -15,39 +16,30 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
     const [senha, setSenha] = useState("")
     const [numeroAbrigo, setNumeroAbrigo] = useState("")
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.tituloAutenticacao}>Cadastro</Text>
-            </View>
-            <View style={{ flex: 3, width: '50%' }}>
-                <View style={styles.viewInputAutenticacao}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor='white' placeholder="Nome" value={nome} onChangeText={setNome} />
-                </View>
-                <View style={styles.viewInputAutenticacao}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor='white' placeholder="Email" value={email} onChangeText={setEmail} />
-                </View>
-                <View style={styles.viewInputAutenticacao}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor='white' placeholder="Numero do abrigo" value={numeroAbrigo} onChangeText={setNumeroAbrigo} />
-                </View>
-                <View style={styles.viewInputAutenticacao}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor='white' placeholder="Senha" value={senha} onChangeText={setSenha} />
-                </View>
-                <View style={{ alignItems: 'center' }}>
-                    <Botao title="Cadastrar" onPress={() => {
+        <View style={styles.bg}>
+            <View style={styles.card}>
+                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.header}>
+                    <Text style={styles.tituloAutenticacao}>CADASTRO</Text>
+                </LinearGradient>
+                <View style={styles.form}>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Nome" value={nome} onChangeText={setNome}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Email" value={email} onChangeText={setEmail}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Numero do abrigo" value={numeroAbrigo} onChangeText={setNumeroAbrigo}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry/>
+                    <Botao title="CADASTRAR" onPress={() => {
                         props.onCadastro(nome, email, numeroAbrigo, senha)
                         props.navigation.navigate("Login")
-                    }} />
+                    }}/>
                 </View>
             </View>
         </View>
     )
 }
 
-
 function Botao(props: BotaoProps) {
     return (
-        <Pressable onPress={props.onPress}>
-            <View style={{ borderRadius: 16, marginTop: 42, backgroundColor: 'green' }} >
+        <Pressable onPress={props.onPress} style={{ width: "100%" }}>
+            <View style={styles.button}>
                 <Text style={styles.buttonTextAutenticacao}>
                     {props.title}
                 </Text>
@@ -55,6 +47,8 @@ function Botao(props: BotaoProps) {
         </Pressable>
     );
 }
+
+
 
 export { Cadastro };
 

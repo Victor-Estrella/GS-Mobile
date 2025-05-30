@@ -21,7 +21,7 @@ export default function Deslogado({ navigation }: any) {
             <Navigator screenOptions={{
                 headerShown: true,
                 drawerType: 'front',
-                headerBackground: () => <View style={{ flex: 1, backgroundColor: '#6b6b6b' }} />,
+                headerBackground: () => <View style={{ flex: 1, backgroundColor: '#FFFFFF' }} />,
                 drawerStyle: {
                     backgroundColor: '#ffffff',
                     width: 240,
