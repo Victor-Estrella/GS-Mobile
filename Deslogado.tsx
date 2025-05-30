@@ -1,14 +1,14 @@
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { View } from 'react-native';
-import { styles } from './estilos';
+import { styles } from './styles/estilos';
+import Abrigo from './telas/CadastroAbrigo';
+import Mapa from './telas/Mapa';
 import Usuario from './Usuario';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Abrigo from './CadastroAbrigo';
-import Mapa from './Mapa';
 
 
-const {Navigator, Screen} = createDrawerNavigator();
+const { Navigator, Screen } = createDrawerNavigator();
 
 export default function Deslogado({ navigation }: any) {
 
@@ -35,8 +35,8 @@ export default function Deslogado({ navigation }: any) {
                 </Screen>
                 <Screen name="Abrigo">
                     {(navProps: any) => (
-                        <Abrigo {...navProps}/>
-                    )}  
+                        <Abrigo {...navProps} />
+                    )}
                 </Screen>
                 <Screen name="Mapa">
                     {(navProps: any) => (

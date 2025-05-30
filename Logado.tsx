@@ -1,13 +1,15 @@
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { View } from 'react-native';
-import { styles } from './estilos';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Mapa from './Mapa';
-import Dashboard from './Dashboard';
+import { styles } from './styles/estilos';
+import Dashboard from './telas/Dashboard';
+import InfoAbrigo from './telas/InfoAbrigo';
+import Mapa from './telas/Mapa';
+import Configuracoes from './telas/Configuracoes';
 
 
-const {Navigator, Screen} = createDrawerNavigator();
+const { Navigator, Screen } = createDrawerNavigator();
 
 export default function Logado() {
 
@@ -28,11 +30,22 @@ export default function Logado() {
                         <Dashboard {...navProps} />
                     )}
                 </Screen>
-                {/* <Screen name="Mapa">
+                <Screen name="Mapa">
                     {(navProps: any) => (
                         <Mapa {...navProps} />
                     )}
-                </Screen> */}
+                </Screen>
+                <Screen name="Informações do Abrigo">
+                    {(navProps: any) => (
+                        <InfoAbrigo {...navProps} />
+                    )}
+                </Screen>
+                <Screen name="Configurações">
+                    {(navProps: any) => (
+                        <Configuracoes {...navProps} />
+                    )}
+                </Screen>
+
             </Navigator>
             <StatusBar style="auto" />
         </View>
