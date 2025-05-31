@@ -2,18 +2,19 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 type DashboardProps = {
-    currentPeople: number;
-    capacity: number;
+    pessoasAtual: number;
+    capacidade: number;
     alimentos: number;
     agua: number;
     roupas: number;
     medicamentos: number;
 };
 
-const getAlertMessage = (current: number, capacity: number) => {
-    const percent = (current / capacity) * 100;
+const getAlertMessage = (current: number, capacidade: number) => {
+    const percent = (current / capacidade) * 100;
     if (percent >= 100) {
         return { message: 'Capacidade máxima atingida!', color: '#d32f2f' };
     }
@@ -23,8 +24,8 @@ const getAlertMessage = (current: number, capacity: number) => {
     return null;
 };
 
-export default function Dashboard({currentPeople, capacity, alimentos, agua, roupas, medicamentos}: DashboardProps) {
-    const alert = getAlertMessage(currentPeople, capacity);
+export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, roupas, medicamentos}: DashboardProps) {
+    const alert = getAlertMessage(pessoasAtual, capacidade);
 
     return (
         <View style={styles.bgDashboard}>
@@ -73,21 +74,20 @@ export default function Dashboard({currentPeople, capacity, alimentos, agua, rou
 
             {/* Card Pessoas abrigadas */}
             <View style={styles.peopleCard}>
-                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{borderWidth: 2, borderColor: '#3BFFFF'}}>
+                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{borderWidth: 2, borderColor: '#3BFFFF', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                     <Text style={styles.peopleTitle}>Pessoas abrigadas</Text>
                 </LinearGradient>            
-                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{borderWidth: 2, borderColor: '#3BFFFF'}}>
-                    <View style={styles.peopleGauge}>
-                        {/* Gauge fake */}
-                        <View style={styles.gaugeArc}>
-                            <Text style={styles.peopleNumber}>{currentPeople}</Text>
-                        </View>
-                        <View style={styles.gaugeLabels}>
-                            <Text style={styles.gaugeLabel}>0</Text>
-                            <Text style={styles.gaugeLabel}>{capacity}</Text>
-                        </View>
-                    </View>
-            </LinearGradient>
+                <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{borderWidth: 2, borderColor: '#3BFFFF', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, alignItems: 'center', justifyContent: 'center' }}>
+                    <AnimatedCircularProgress size={160} width={15} fill={(50 / 100) * 100} tintColor="#8BAA8E" backgroundColor="#E0E0E0" rotation={270} arcSweepAngle={180} lineCap="round" style={{ marginTop: 30 }}>
+                        {() => (
+                            <Text style={{ fontSize: 40, color: 'white', fontWeight: 'bold' }}>{50}</Text>
+                        )}
+                    </AnimatedCircularProgress>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 170, marginTop: -60, marginLeft: 10, marginBottom: 20 }}>
+                        <Text style={{ color: 'white', fontSize: 18 }}>0</Text>
+                        <Text style={{ color: 'white', fontSize: 18 }}>100</Text>
+                    </View>                
+                </LinearGradient>
             </View>
 
 
