@@ -1,6 +1,6 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet } from "react-native";
+import { Pressable, Text, TextInput, View, StyleSheet, ToastAndroid } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import BotaoProps from "../types/BotaoTipo";
 import { styles } from "../styles/estilos";
@@ -11,6 +11,17 @@ interface CadastroProps {
 }
 
 const Cadastro = (props: CadastroProps): React.ReactElement => {
+
+    const handleCadastro = () => {
+    if (!nome || !email || !numeroAbrigo || !senha) {
+        ToastAndroid.show('Preencha todos os campos.', ToastAndroid.SHORT);
+        return;
+    }
+    props.onCadastro(nome, email, numeroAbrigo, senha);
+    props.navigation.navigate("Login");
+};
+
+    
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
@@ -26,10 +37,7 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Email" value={email} onChangeText={setEmail}/>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Numero do abrigo" value={numeroAbrigo} onChangeText={setNumeroAbrigo}/>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry/>
-                    <Botao title="CADASTRAR" onPress={() => {
-                        props.onCadastro(nome, email, numeroAbrigo, senha)
-                        props.navigation.navigate("Login")
-                    }}/>
+                    <Botao title="CADASTRAR" onPress={handleCadastro}/>
                 </View>
             </View>
         </View>

@@ -6,12 +6,26 @@ import { View } from 'react-native';
 import Deslogado from './Deslogado';
 import Logado from './Logado';
 import { styles } from './styles/estilos';
+import { Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
+import { Poppins_900Black } from '@expo-google-fonts/poppins';
+import { useFonts } from 'expo-font';
 
 
 const { Navigator, Screen } = createStackNavigator();
 
 export default function App() {
-
+  
+  const [fontsLoaded] = useFonts({
+    Poppins_900Black,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_700Bold,
+  });
+  
+  if (!fontsLoaded) {
+    return null;
+  }
+  
   return (
     <NavigationContainer>
       <View style={styles.container}>

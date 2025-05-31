@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function InfoAbrigo() {
     const [pessoas, setPessoas] = useState('');
@@ -32,18 +33,56 @@ export default function InfoAbrigo() {
     };
 
     const handleSubmit = async () => {
-        if (
-            !pessoas ||
-            alimentos.some(a => !a.trim()) ||
-            !agua ||
-            roupas.some(r => !r.trim()) ||
-            medicamentos.some(m => !m.trim())
-        ) {
-            alert('Preencha todos os campos');
+    const parsedPessoas = parseInt(pessoas);
+    const parsedAgua = parseFloat(agua);
+
+    if (
+        isNaN(parsedPessoas) ||
+        isNaN(parsedAgua) ||
+        alimentos.some(a => !a.trim()) ||
+        roupas.some(r => !r.trim()) ||
+        medicamentos.some(m => !m.trim())
+    ) {
+        alert('Preencha todos os campos corretamente');
+        return;
+    }
+
+    try {
+        const abrigoId = await AsyncStorage.getItem('abrigoId');
+
+        if (!abrigoId) {
+            alert("ID do abrigo não encontrado. Faça login novamente.");
             return;
         }
+
+        const body = {
+            abrigoId: parseInt(abrigoId),
+            pessoas: parsedPessoas,
+            agua: parsedAgua,
+            alimentos,
+            roupas,
+            medicamentos
+        };
+
+        const response = await fetch('http://SEU_BACKEND/api/estoques', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+            alert('Erro ao cadastrar estoque');
+            return;
+        }
+
         alert('Cadastro realizado com sucesso!');
-    };
+    } catch (error) {
+        console.error(error);
+        alert('Erro ao enviar dados');
+    }
+};
 
     return (
         <View style={styles.bg}>

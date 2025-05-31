@@ -4,6 +4,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { styles } from "../styles/estilos";
 import BotaoProps from "../types/BotaoTipo";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 interface LoginProps {
@@ -14,6 +15,29 @@ interface LoginProps {
 const Login = (props: LoginProps): React.ReactElement => {
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+
+
+    const handleLogin = async (email: string, senha: string) => {
+    try {
+        const response = await fetch('http://SEU_BACKEND/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, senha })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.abrigoId) {
+            await AsyncStorage.setItem('abrigoId', data.abrigoId.toString());
+        } else {
+            alert("Login falhou ou abrigo não encontrado");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Erro de conexão");
+    }
+};
+
     return (
         <View style={styles.bg}>
             <View style={styles.card}>

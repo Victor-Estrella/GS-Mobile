@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   tituloAutenticacao: {
     color: "#fff",
     fontSize: 22,
-    fontWeight: "bold",
     letterSpacing: 1,
+    fontFamily: "Poppins_700Bold",
   },
   form: {
     width: "100%",
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     fontSize: 16,
     color: "#222",
-    fontFamily: "Inter",
+    fontFamily: "Inter_400Regular", 
     minHeight: 50,
     textAlignVertical: 'center',
     includeFontPadding: false,
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
   },
   buttonTextAutenticacao: {
     color: "#fff",
-    fontWeight: "bold",
     fontSize: 18,
     letterSpacing: 1,
+    fontFamily: "Inter_700Bold",
   },
 
   // Formulário de Informações do Abrigo
@@ -88,6 +88,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
   },
+  tituloInfo: {
+    color: "#fff",
+    fontSize: 22,
+    letterSpacing: 1,
+    fontFamily: "Poppins_700Bold",
+  },
   formInfo: {
     width: "100%",
     alignItems: "center",
@@ -102,12 +108,13 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     fontSize: 16,
     color: "#222",
+    fontFamily: "Inter_400Regular",
   },
   addLink: {
     color: "#1E88E5",
     fontSize: 15,
     marginBottom: 30,
-    fontWeight: "500",
+    fontFamily: "Inter_500Medium",
   },
   buttonInfo: {
     width: "100%",
@@ -120,10 +127,165 @@ const styles = StyleSheet.create({
   },
   buttonTextInfo: {
     color: "#fff",
-    fontWeight: "bold",
     fontSize: 22,
     letterSpacing: 1,
+    fontFamily: "Inter_700Bold",
   },
+
+  // Dashboard
+  bgDashboard: {
+        flex: 1,
+        backgroundColor: "#81C784",
+        alignItems: "center",
+        paddingTop: 32,
+    },
+    logoRow: {
+        flexDirection: "row",
+        marginBottom: 18,
+        marginTop: 10,
+        gap: 10,
+    },
+    logoImg: {
+        width: 48,
+        height: 48,
+        marginRight: 8,
+    },
+    logoText: {
+        fontSize: 36,
+        fontFamily: "Poppins_900Black",
+        letterSpacing: 1,
+    },
+    logoSafe: {
+        color: "#fff",
+        fontFamily: "Poppins_900Black",
+    },
+    logoBoard: {
+        color: "#1E88E5",
+        fontFamily: "Poppins_900Black",
+    },
+    resourcesRow: {
+        flexDirection: "row",
+        justifyContent: "center",
+        width: "90%",
+        marginBottom: 10,
+        gap: 16,
+    },
+    resourceBox: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#1E88E5",
+        borderRadius: 20,
+        paddingVertical: 18,
+        paddingHorizontal: 18,
+        marginHorizontal: 4,
+        minWidth: 140,
+        elevation: 2,
+        gap: 12,
+    },
+    resourceIcon: {
+        width: 32,
+        height: 32,
+        marginRight: 8,
+    },
+    resourceLabel: {
+        color: "#dbeafe",
+        fontSize: 12,
+        fontFamily: "Inter_500Medium",
+        marginBottom: 2,
+    },
+    resourceValue: {
+        color: "#fff",
+        fontSize: 20,
+        fontFamily: "Inter_400Regular",
+        
+    },
+    bold: {
+        fontFamily: "Inter_700Bold",
+    },
+    resourceUnit: {
+        color: "#f9f9f9",
+        fontSize: 14,
+        fontFamily: "Inter_700Bold",
+    },
+    peopleCard: {
+        width: "90%",
+        marginTop: 18,
+        marginBottom: 18,
+        padding: 0,
+        overflow: "hidden",
+        elevation: 2,
+    },
+    peopleTitle: {
+        color: "#fff",
+        fontSize: 20,
+        fontFamily: "Inter_400Regular", 
+        padding: 16,
+        paddingBottom: 8,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        backgroundColor: "transparent",
+    },
+    peopleGauge: {
+        backgroundColor: "rgba(255,255,255,0.08)",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 24,
+    },
+    gaugeArc: {
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 8,
+        position: "relative",
+    },
+    gaugeImg: {
+        width: 170,
+        height: 80,
+        marginBottom: -40,
+    },
+    peopleNumber: {
+        color: "#fff",
+        fontSize: 40,
+        fontFamily: "Inter_700Bold",
+        textAlign: "center",
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 32,
+    },
+    gaugeLabels: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "90%",
+        marginTop: 4,
+    },
+    gaugeLabel: {
+        color: "#fff",
+        fontSize: 16,
+        fontFamily: "Inter_400Regular",
+        opacity: 0.8,
+    },
+    alert: {
+        fontFamily: "Inter_700Bold",
+        marginTop: 12,
+        textAlign: 'center',
+        fontSize: 16,
+    },
+    mapPlaceholder: {
+        width: "90%",
+        aspectRatio: 1,
+        backgroundColor: "#c8e6c9",
+        borderRadius: 24,
+        marginTop: 16,
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+    },
+    mapImg: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 24,
+    },
 });
 
 export { styles };
