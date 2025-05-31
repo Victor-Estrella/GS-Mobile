@@ -6,6 +6,7 @@ import { styles } from './styles/estilos';
 import Abrigo from './telas/CadastroAbrigo';
 import Mapa from './telas/Mapa';
 import Usuario from './Usuario';
+import Landing from './telas/Landing';
 
 
 const { Navigator, Screen } = createDrawerNavigator();
@@ -28,6 +29,11 @@ export default function Deslogado({ navigation }: any) {
                 },
                 drawerPosition: 'left',
             }}>
+                <Screen name="Landing" options={{ title: 'SafeHub' }}>
+                    {(navProps: any) => (
+                        <Landing {...navProps} />
+                    )}
+                </Screen>
                 <Screen name="Usuario">
                     {(navProps: any) => (
                         <Usuario {...navProps} SucessoLogin={SucessoLogin} />

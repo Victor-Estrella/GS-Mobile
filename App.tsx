@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import Deslogado from './Deslogado';
 import Logado from './Logado';
 import { styles } from './styles/estilos';
-import { Inter_400Regular, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
+import { Inter_400Regular, Inter_500Medium, Inter_700Bold, Inter_900Black } from '@expo-google-fonts/inter';
 import { Poppins_900Black } from '@expo-google-fonts/poppins';
 import { useFonts } from 'expo-font';
 
@@ -20,6 +20,7 @@ export default function App() {
     Inter_400Regular,
     Inter_500Medium,
     Inter_700Bold,
+    Inter_900Black
   });
   
   if (!fontsLoaded) {
