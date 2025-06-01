@@ -1,8 +1,7 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import { styles } from "../styles/estilos";
-import BotaoProps from "../types/BotaoTipo";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Botao from "../components/Botao";

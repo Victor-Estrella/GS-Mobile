@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Alert, Text, TextInput, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { Alert, Text, TextInput, View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { styles as globalStyles, styles } from "../styles/estilos";
 import { useNavigation } from "@react-navigation/native";
-import BotaoProps from "../types/BotaoTipo";
 import Botao from "../components/Botao";
 
 export default function Configuracoes() {

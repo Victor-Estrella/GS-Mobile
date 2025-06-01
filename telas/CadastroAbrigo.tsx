@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, ToastAndroid, TouchableOpacity, Pressable } from 'react-native';
+import { View, Text, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import axios from 'axios';
 import { styles } from '../styles/estilos';
 import { LinearGradient } from 'expo-linear-gradient';
-import BotaoProps from '../types/BotaoTipo';
 import Botao from '../components/Botao';
 
 export default function CadastroAbrigo() {

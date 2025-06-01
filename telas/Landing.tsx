@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
-import BotaoProps from '../types/BotaoTipo';
 
 export default function Landing({ navigation }: any) {
     return (

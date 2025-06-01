@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
 
   // Dashboard
   bgDashboard: {
-    flex: 1,
     backgroundColor: "#81C784",
     alignItems: "center",
     paddingTop: 32,
@@ -276,6 +275,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#c8e6c9",
     borderRadius: 24,
     marginTop: 16,
+    marginBottom: 36,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
@@ -419,6 +419,66 @@ const styles = StyleSheet.create({
     color: "#222",
     backgroundColor: "#F7F7F7",
     fontFamily: "Inter_400Regular",
+  },
+
+  // Mapa
+  loadingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  legendaContainer: {
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    borderRadius: 8,
+    padding: 10,
+    zIndex: 10,
+    elevation: 10,
+    minWidth: 140,
+  },
+  legendaOverlay: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.18,
+    shadowRadius: 4,
+    elevation: 6,
+    minWidth: 110,
+    zIndex: 20,
+  },
+  legendaTitulo: {
+    fontWeight: 'bold',
+    marginBottom: 6,
+    fontSize: 15,
+    color: '#1E88E5',
+    letterSpacing: 0.5,
+  },
+  legendaItens: {
+    flexDirection: 'column',
+    gap: 6,
+  },
+  legendaItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  diamante: {
+    width: 16,
+    height: 16,
+    marginRight: 7,
+    transform: [{ rotate: '45deg' }],
+    borderWidth: 1,
+    borderColor: '#888',
+  },
+  legendaTexto: {
+    fontSize: 13,
+    color: '#333',
   },
 });
 

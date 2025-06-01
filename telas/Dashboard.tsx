@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import AlertaList from './AlertaList';
 
 type DashboardProps = {
     pessoasAtual: number;
@@ -28,7 +29,7 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
     const alert = getAlertMessage(pessoasAtual, capacidade);
 
     return (
-        <View style={styles.bgDashboard}>
+        <ScrollView contentContainerStyle={styles.bgDashboard}>
             {/* Logo */}
             <View style={styles.logoRow}>
                 <Image source={require('../assets/logo.png')} style={styles.logoImg} resizeMode="contain" />
@@ -90,15 +91,31 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
                 </LinearGradient>
             </View>
 
-
             {alert && (
                 <Text style={[styles.alert, { color: alert.color }]}>{alert.message}</Text>
             )}
 
-            {/* Mapa ilustrativo */}
+            {/* Mapa de alertas */}
             <View style={styles.mapPlaceholder}>
-                {/* <Image source={require('../assets/map.png')} style={styles.mapImg} resizeMode="cover" /> */}
+                <AlertaList />
+                <View style={styles.legendaOverlay}>
+                    <Text style={styles.legendaTitulo}>Legenda</Text>
+                    <View style={styles.legendaItens}>
+                        <View style={styles.legendaItem}>
+                            <View style={[styles.diamante, { backgroundColor: '#fbc02d' }]} />
+                            <Text style={styles.legendaTexto}>Potencial</Text>
+                        </View>
+                        <View style={styles.legendaItem}>
+                            <View style={[styles.diamante, { backgroundColor: '#ff9800' }]} />
+                            <Text style={styles.legendaTexto}>Perigo</Text>
+                        </View>
+                        <View style={styles.legendaItem}>
+                            <View style={[styles.diamante, { backgroundColor: '#d32f2f' }]} />
+                            <Text style={styles.legendaTexto}>Grande Perigo</Text>
+                        </View>
+                    </View>
+                </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }

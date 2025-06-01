@@ -1,8 +1,7 @@
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View, StyleSheet, ToastAndroid } from "react-native";
+import { Text, TextInput, View, ToastAndroid } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import BotaoProps from "../types/BotaoTipo";
 import { styles } from "../styles/estilos";
 import Botao from "../components/Botao";
 

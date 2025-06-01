@@ -7,6 +7,7 @@ import Dashboard from './telas/Dashboard';
 import InfoAbrigo from './telas/InfoAbrigo';
 import Mapa from './telas/Mapa';
 import Configuracoes from './telas/Configuracoes';
+import AlertaList from './telas/AlertaList';
 
 
 const { Navigator, Screen } = createDrawerNavigator();
@@ -30,14 +31,19 @@ export default function Logado() {
                         <Dashboard {...navProps} />
                     )}
                 </Screen>
+                <Screen name="Informações do Abrigo">
+                    {(navProps: any) => (
+                        <InfoAbrigo {...navProps} />
+                    )}
+                </Screen>
                 <Screen name="Mapa">
                     {(navProps: any) => (
                         <Mapa {...navProps} />
                     )}
                 </Screen>
-                <Screen name="Informações do Abrigo">
+                <Screen name="TESTE">
                     {(navProps: any) => (
-                        <InfoAbrigo {...navProps} />
+                        <AlertaList {...navProps} />
                     )}
                 </Screen>
                 <Screen name="Configurações">
