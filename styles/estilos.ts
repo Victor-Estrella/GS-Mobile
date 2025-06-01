@@ -177,15 +177,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#1E88E5",
     borderRadius: 20,
     paddingVertical: 18,
-    paddingHorizontal: 18,
+    paddingHorizontal: 12,
     marginHorizontal: 4,
     minWidth: 140,
     elevation: 2,
     gap: 12,
   },
   resourceIcon: {
-    width: 32,
-    height: 32,
+    width: 38,
+    height: 38,
     marginRight: 8,
   },
   resourceLabel: {
@@ -302,13 +302,13 @@ const styles = StyleSheet.create({
   logoRowLanding: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
-    marginLeft: 10,
+    marginBottom: 40,
+    marginLeft: 30,
     alignSelf: 'flex-start',
   },
   logoIcon: {
-    width: 28,
-    height: 28,
+    width: 40,
+    height: 52,
     marginRight: 8,
   },
   logoTextLanding: {
@@ -369,7 +369,57 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter_900Black',
     fontSize: 16,
     fontWeight: '900',
-  }
+  },
+
+  // Configurações
+  cardCondig: {
+    width: "92%",
+    borderRadius: 18,
+    backgroundColor: "#fff",
+    marginTop: 40,
+    marginBottom: 20,
+    overflow: "hidden",
+    elevation: 4,
+  },
+  headerConfig: {
+    width: "100%",
+    paddingVertical: 24,
+    paddingHorizontal: 20,
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  tituloConfig: {
+    color: "#fff",
+    fontSize: 24,
+    fontFamily: "Poppins_900Black",
+    letterSpacing: 1,
+  },
+  formConfig: {
+    padding: 20,
+    backgroundColor: "#fff",
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+  },
+  labelConfig: {
+    fontSize: 16,
+    color: "#1E88E5",
+    fontFamily: "Inter_700Bold",
+    marginBottom: 4,
+    marginTop: 10,
+  },
+  inputConfig: {
+    borderWidth: 1,
+    borderColor: "#B9B6B6",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+    fontSize: 16,
+    color: "#222",
+    backgroundColor: "#F7F7F7",
+    fontFamily: "Inter_400Regular",
+  },
 });
 
 export { styles };

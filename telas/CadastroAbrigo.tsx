@@ -5,6 +5,7 @@ import axios from 'axios';
 import { styles } from '../styles/estilos';
 import { LinearGradient } from 'expo-linear-gradient';
 import BotaoProps from '../types/BotaoTipo';
+import Botao from '../components/Botao';
 
 export default function CadastroAbrigo() {
     const [nome, setNome] = useState('');
@@ -112,18 +113,5 @@ export default function CadastroAbrigo() {
                 </View>
             )}
         </View>
-    );
-}
-
-
-function Botao(props: BotaoProps) {
-    return (
-        <Pressable onPress={props.onPress} style={{ width: "100%" }}>
-            <View style={styles.button}>
-                <Text style={styles.buttonTextAutenticacao}>
-                    {props.title}
-                </Text>
-            </View>
-        </Pressable>
     );
 }

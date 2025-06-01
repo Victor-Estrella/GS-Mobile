@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -44,14 +44,14 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
                     <Image source={require('../assets/agua.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Água</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{agua}</Text> <Text style={styles.resourceUnit}>litros</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{agua}12</Text> <Text style={styles.resourceUnit}>litros</Text></Text>
                     </View>
                 </LinearGradient>
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.resourceBox}>
                     <Image source={require('../assets/alimentos.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Alimentos</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{alimentos}</Text> <Text style={styles.resourceUnit}>kgs</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{alimentos}120</Text> <Text style={styles.resourceUnit}>kgs</Text></Text>
                     </View>
                 </LinearGradient>
             </View>
@@ -60,14 +60,14 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
                     <Image source={require('../assets/roupas.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Roupas</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{roupas}</Text> <Text style={styles.resourceUnit}>mudas</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{roupas}12</Text> <Text style={styles.resourceUnit}>mudas</Text></Text>
                     </View>
                 </LinearGradient>
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.resourceBox}>
                     <Image source={require('../assets/medicamento.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Medicamentos</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{medicamentos}</Text> <Text style={styles.resourceUnit}>caixas</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{medicamentos}12</Text> <Text style={styles.resourceUnit}>caixas</Text></Text>
                     </View>
                 </LinearGradient>
             </View>

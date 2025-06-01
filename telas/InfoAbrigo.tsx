@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable, ScrollV
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Botao from '../components/Botao';
 
 export default function InfoAbrigo() {
     const [pessoas, setPessoas] = useState('');
@@ -118,10 +119,7 @@ export default function InfoAbrigo() {
                             <Text style={styles.addLink}>+ Adicionar medicamento</Text>
                         </TouchableOpacity>
 
-
-                        <Pressable style={styles.button} onPress={handleSubmit}>
-                            <Text style={styles.buttonTextAutenticacao}>CADASTRAR</Text>
-                        </Pressable>
+                        <Botao title="CADASTRAR" onPress={handleSubmit}/>
                     </ScrollView>
             </View>
         </View>

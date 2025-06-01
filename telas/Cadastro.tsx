@@ -4,6 +4,7 @@ import { Pressable, Text, TextInput, View, StyleSheet, ToastAndroid } from "reac
 import { LinearGradient } from 'expo-linear-gradient';
 import BotaoProps from "../types/BotaoTipo";
 import { styles } from "../styles/estilos";
+import Botao from "../components/Botao";
 
 interface CadastroProps {
     navigation: NavigationProp<ParamListBase>;
@@ -43,19 +44,6 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
         </View>
     )
 }
-
-function Botao(props: BotaoProps) {
-    return (
-        <Pressable onPress={props.onPress} style={{ width: "100%" }}>
-            <View style={styles.button}>
-                <Text style={styles.buttonTextAutenticacao}>
-                    {props.title}
-                </Text>
-            </View>
-        </Pressable>
-    );
-}
-
 
 
 export { Cadastro };
