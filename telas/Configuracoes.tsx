@@ -13,7 +13,7 @@ export default function Configuracoes() {
     const [senha, setSenha] = useState("");
     const navigation = useNavigation() as any;
 
-    const handleSalvar = async () => {
+    const atualizarConta = async () => {
         if (!nome.trim() || !email.trim()) {
             ToastAndroid.show("Por favor, preencha nome e email para atualizar.", ToastAndroid.SHORT);
             return;
@@ -56,7 +56,7 @@ export default function Configuracoes() {
         }
     };
 
-    const handleExcluirConta = async () => {
+    const excluirConta = async () => {
         Alert.alert(
             "Excluir Conta",
             "Tem certeza que deseja excluir sua conta? Esta ação não poderá ser desfeita.",
@@ -84,8 +84,17 @@ export default function Configuracoes() {
         );
     };
 
+    const deslogar = async () => {
+        await AsyncStorage.clear();
+        ToastAndroid.show("Você saiu da conta.", ToastAndroid.SHORT);
+        navigation.navigate("Deslogado");
+    };
+
     return (
         <View style={styles.bg}>
+            <View style={{position: "absolute", top: 12, right: 12, width: 120}}>
+                <Botao title="DESLOGAR" onPress={deslogar} cor="#888" />
+            </View>
             <View style={styles.cardCondig}>
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.headerConfig}>
                     <Text style={styles.tituloAutenticacao}>Configurações</Text>
@@ -98,18 +107,11 @@ export default function Configuracoes() {
                     <TextInput style={styles.inputConfig} value={email} onChangeText={setEmail} placeholder="Digite seu email" placeholderTextColor="#B9B6B6" keyboardType="email-address" autoCapitalize="none"/>
                     
                     <Text style={styles.labelConfig}>Senha (opcional)</Text>
-                    <TextInput
-                        style={styles.inputConfig}
-                        value={senha}
-                        onChangeText={setSenha}
-                        placeholder="Digite sua nova senha (ou deixe em branco)"
-                        placeholderTextColor="#B9B6B6"
-                        secureTextEntry
-                    />
+                    <TextInput style={styles.inputConfig} value={senha} onChangeText={setSenha} placeholder="Digite sua nova senha (ou deixe em branco)" placeholderTextColor="#B9B6B6" secureTextEntry/>
                     
-                    <Botao title="SALVAR ALTERAÇÕES" onPress={handleSalvar} />
+                    <Botao title="SALVAR ALTERAÇÕES" onPress={atualizarConta} />
                     <View style={{ height: 16 }} />
-                    <Botao title="EXCLUIR CONTA" onPress={handleExcluirConta} cor="red" />
+                    <Botao title="EXCLUIR CONTA" onPress={excluirConta} cor="red" />
                 </ScrollView>
             </View>
         </View>

@@ -17,7 +17,7 @@ const Login = (props: LoginProps): React.ReactElement => {
     const [senha, setSenha] = useState("");
 
 
-    const handleLogin = async (email: string, senha: string) => {
+    const logar = async (email: string, senha: string) => {
         if (!email || !senha) {
             alert("Preencha todos os campos.");
             return;
@@ -53,7 +53,7 @@ const Login = (props: LoginProps): React.ReactElement => {
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Email" value={email} onChangeText={setEmail}/>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry/>
                     <Botao title="ENTRAR" onPress={() =>
-                        handleLogin(email, senha)
+                        logar(email, senha)
                     }/>
                 </View>
             </View>

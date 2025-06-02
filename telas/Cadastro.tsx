@@ -12,7 +12,7 @@ interface CadastroProps {
 
 const Cadastro = (props: CadastroProps): React.ReactElement => {
 
-    const handleCadastro = async () => {
+    const cadastrar = async () => {
         if (!nome || !email || !numeroAbrigo || !senha) {
             ToastAndroid.show('Preencha todos os campos.', ToastAndroid.SHORT);
             return;
@@ -71,7 +71,7 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Numero do abrigo" value={numeroAbrigo} onChangeText={setNumeroAbrigo}/>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry/>
                     <Text style={{ color: "#B9B6B6", fontSize: 12, marginBottom: 8 }}>A senha deve ter entre 8 e 15 caracteres.</Text>
-                    <Botao title="CADASTRAR" onPress={handleCadastro} />
+                    <Botao title="CADASTRAR" onPress={cadastrar} />
                 </View>
             </View>
         </View>

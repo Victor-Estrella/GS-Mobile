@@ -13,38 +13,7 @@ export default function CadastroAbrigo() {
     const [responsaveis, setResponsaveis] = useState('');
     const [abrigoId, setAbrigoId] = useState<string | null>(null);
 
-    function gerarIdAleatorio() {
-        return Math.floor(10000 + Math.random() * 90000).toString();
-    }
-
-    const geocodeAddress = async (endereco: string) => {
-        try {
-            const response = await axios.get('https://nominatim.openstreetmap.org/search', {
-                params: {
-                    q: endereco,
-                    format: 'json',
-                },
-                headers: {
-                    'User-Agent': 'SmartAbrigoApp/1.0 (contato@exemplo.com)',
-                    'Accept-Language': 'pt-BR',
-                }
-            });
-
-            if (response.data.length > 0) {
-                return {
-                    latitude: parseFloat(response.data[0].lat),
-                    longitude: parseFloat(response.data[0].lon),
-                };
-            } else {
-                throw new Error("Endereço não encontrado");
-            }
-        } catch (error) {
-            console.error('Erro no geocode:', error);
-            throw error;
-        }
-    };
-
-    const handleSubmit = async () => {
+    const cadastrarAbrigo = async () => {
         if (!nome || !localizacao || !capacidadeMaxima || !responsaveis) {
             ToastAndroid.show('Preencha todos os campos', ToastAndroid.SHORT);
             return;
@@ -57,21 +26,17 @@ export default function CadastroAbrigo() {
         }
 
         try {
-            const coordenadas = await geocodeAddress(localizacao);
             const novoAbrigo = {
-                id: gerarIdAleatorio(),
-                nome,
-                capacidade: capacidadeNum,
-                responsaveis,
-                latitude: coordenadas.latitude,
-                longitude: coordenadas.longitude,
-                ocupado: 0,
+                nomeAbrigo: nome,
+                capacidadePessoa: capacidadeNum,
+                nomeResponsavel: responsaveis,
+                localizacao
             };
-            console.log(novoAbrigo);
-            setAbrigoId(novoAbrigo.id);
+            const response = await axios.post('http://192.168.0.24:8080/abrigos', novoAbrigo);
+            setAbrigoId(response.data.idCadastroAbrigo?.toString() || '');
             ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.LONG);
         } catch (e) {
-            ToastAndroid.show('Erro ao obter localização', ToastAndroid.LONG);
+            ToastAndroid.show('Erro ao cadastrar abrigo', ToastAndroid.LONG);
         }
     };
 
@@ -89,13 +54,11 @@ export default function CadastroAbrigo() {
                     <Text style={styles.tituloAutenticacao}>CADASTRO DE ABRIGO</Text>
                 </LinearGradient>
                 <View style={styles.form}>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Nome" value={nome} onChangeText={setNome}/>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Avenida Paulista, 1578, São Paulo" value={localizacao} onChangeText={setLocalizacao}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Nome do Abrigo" value={nome} onChangeText={setNome}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Avenida Paulista, 1230, São Paulo" value={localizacao} onChangeText={setLocalizacao}/>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Capacidade Máxima" value={capacidadeMaxima} onChangeText={setCapacidadeMaxima} keyboardType="numeric"/>
-                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Responsáveis" value={responsaveis} onChangeText={setResponsaveis}/>
-                    <Botao title="CADASTRAR" onPress={() => {
-                        handleSubmit();
-                    }}/>
+                    <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Responsável" value={responsaveis} onChangeText={setResponsaveis}/>
+                    <Botao title="CADASTRAR" onPress={cadastrarAbrigo}/>
                 </View>
             </View>
 
