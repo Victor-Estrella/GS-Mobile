@@ -9,34 +9,50 @@ import Botao from "../components/Botao";
 
 interface LoginProps {
     navigation: NavigationProp<ParamListBase>;
-    onLogin: (nome: string, senha: string) => void
 }
 
 const Login = (props: LoginProps): React.ReactElement => {
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
 
 
     const handleLogin = async (email: string, senha: string) => {
-    try {
-        const response = await fetch('http://SEU_BACKEND/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, senha })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.abrigoId) {
-            await AsyncStorage.setItem('abrigoId', data.abrigoId.toString());
-        } else {
-            alert("Login falhou ou abrigo não encontrado");
+        if (!email || !senha) {
+            alert("Preencha todos os campos.");
+            return;
         }
-    } catch (err) {
-        console.error(err);
-        alert("Erro de conexão");
-    }
-};
+        try {
+            const response = await fetch('http://192.168.0.24:8080/usuarios/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, senha })
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                alert("Email ou senha incorretos.");
+                return;
+            } else if (response.status === 404) {
+                alert("Usuário não encontrado.");
+                return;
+            } else if (!response.ok) {
+                alert("Login falhou. Tente novamente.");
+                return;
+            }
+
+            const data = await response.json();
+            console.log(data);
+
+            if (data.usuario && data.usuario.chaveAbrigo) {
+                await AsyncStorage.setItem('abrigoId', data.usuario.chaveAbrigo.toString());
+                props.navigation.navigate('Logado');
+            } else {
+                alert("Login falhou. Tente novamente.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Erro de conexão");
+        }
+    };
 
     return (
         <View style={styles.bg}>
@@ -47,9 +63,9 @@ const Login = (props: LoginProps): React.ReactElement => {
                 <View style={styles.form}>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Email" value={email} onChangeText={setEmail}/>
                     <TextInput style={styles.inputAutenticacao} placeholderTextColor="#B9B6B6" placeholder="Senha" value={senha} onChangeText={setSenha} secureTextEntry/>
-                    <Botao title="ENTRAR" onPress={() => {
-                        props.onLogin(email, senha)
-                    }}/>
+                    <Botao title="ENTRAR" onPress={() =>
+                        handleLogin(email, senha)
+                    }/>
                 </View>
             </View>
         </View>
