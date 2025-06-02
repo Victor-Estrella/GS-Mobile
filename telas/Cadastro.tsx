@@ -4,6 +4,7 @@ import { Text, TextInput, View, ToastAndroid } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from "../styles/estilos";
 import Botao from "../components/Botao";
+import axios from "axios";
 
 interface CadastroProps {
     navigation: NavigationProp<ParamListBase>;
@@ -23,51 +24,34 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
 
         // Verifica se o e-mail já existe
         try {
-            const verificaEmail = await fetch(`http://192.168.0.24:8080/usuarios?email=${encodeURIComponent(email)}`);
-            if (verificaEmail.ok) {
-                const usuarios = await verificaEmail.json();
-                console.log(usuarios); // Veja o que retorna!
-                // Corrija aqui: filtra o array pelo email informado
-                const emailJaExiste = Array.isArray(usuarios) && usuarios.some((u) => u.email === email);
-                if (emailJaExiste) {
-                    ToastAndroid.show('Este e-mail já está cadastrado.', ToastAndroid.SHORT);
-                    return;
-                }
+            const verificaEmail = await axios.get(`http://192.168.0.24:8080/usuarios`);
+            const usuarios = verificaEmail.data;
+            const emailJaExiste = Array.isArray(usuarios) && usuarios.some((u) => u.email === email);
+            if (emailJaExiste) {
+                ToastAndroid.show('Este e-mail já está cadastrado.', ToastAndroid.SHORT);
+                return;
             }
         } catch (e) {
             // Se não conseguir verificar, segue para o cadastro normalmente
         }
 
         try {
-            const response = await fetch('http://192.168.0.24:8080/usuarios', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    nome,
-                    email,
-                    senha,
-                    chaveAbrigo: Number(numeroAbrigo)
-                })
+            await axios.post('http://192.168.0.24:8080/usuarios', {
+                nome,
+                email,
+                senha,
+                chaveAbrigo: Number(numeroAbrigo)
             });
-
-            if (response.status === 409) {
-                ToastAndroid.show('Este e-mail já está cadastrado.', ToastAndroid.SHORT);
-                return;
-            } else if (response.status === 404) {
-                ToastAndroid.show('Abrigo não encontrado.', ToastAndroid.SHORT);
-                return;
-            } else if (!response.ok) {
-                ToastAndroid.show('Erro ao cadastrar. Tente novamente.', ToastAndroid.SHORT);
-                return;
-            }
-
             ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.SHORT);
             props.navigation.navigate("Login");
         } catch (error: any) {
-            ToastAndroid.show(
-                'Erro de conexão. Verifique sua internet ou o servidor.',
-                ToastAndroid.LONG
-            );
+            if (error.response?.status === 409) {
+                ToastAndroid.show('Este e-mail já está cadastrado.', ToastAndroid.SHORT);
+            } else if (error.response?.status === 404) {
+                ToastAndroid.show('Abrigo não encontrado.', ToastAndroid.SHORT);
+            } else {
+                ToastAndroid.show('Erro ao cadastrar. Tente novamente.', ToastAndroid.SHORT);
+            }
         }
     };
     

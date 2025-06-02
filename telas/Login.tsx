@@ -5,6 +5,7 @@ import { styles } from "../styles/estilos";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Botao from "../components/Botao";
+import axios from "axios";
 
 
 interface LoginProps {
@@ -22,35 +23,23 @@ const Login = (props: LoginProps): React.ReactElement => {
             return;
         }
         try {
-            const response = await fetch('http://192.168.0.24:8080/usuarios/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha })
-            });
-
-            if (response.status === 401 || response.status === 403) {
-                alert("Email ou senha incorretos.");
-                return;
-            } else if (response.status === 404) {
-                alert("Usuário não encontrado.");
-                return;
-            } else if (!response.ok) {
-                alert("Login falhou. Tente novamente.");
-                return;
-            }
-
-            const data = await response.json();
-            console.log(data);
-
+            const response = await axios.post('http://192.168.0.24:8080/usuarios/login', { email, senha });
+            const data = response.data;
             if (data.usuario && data.usuario.chaveAbrigo) {
                 await AsyncStorage.setItem('abrigoId', data.usuario.chaveAbrigo.toString());
+                await AsyncStorage.setItem('idUsuario', data.usuario.idUsuario.toString()); 
                 props.navigation.navigate('Logado');
             } else {
                 alert("Login falhou. Tente novamente.");
             }
-        } catch (err) {
-            console.error(err);
-            alert("Erro de conexão");
+        } catch (error: any) {
+            if (error.response?.status === 401 || error.response?.status === 403) {
+                alert("Email ou senha incorretos.");
+            } else if (error.response?.status === 404) {
+                alert("Usuário não encontrado.");
+            } else {
+                alert("Erro de conexão");
+            }
         }
     };
 
