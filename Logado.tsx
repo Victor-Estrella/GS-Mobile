@@ -4,7 +4,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { styles } from './styles/estilos';
 import Dashboard from './telas/Dashboard';
-import InfoAbrigo from './telas/InfoAbrigo';
+import InfoAbrigo from './InfoAbrigo';
 import Mapa from './telas/Mapa';
 import Configuracoes from './telas/Configuracoes';
 
@@ -18,7 +18,7 @@ export default function Logado() {
             <Navigator initialRouteName="Dashboard" screenOptions={{
                 headerShown: true,
                 drawerType: 'front',
-                headerBackground: () => <View style={{ flex: 1, backgroundColor: '#6b6b6b' }} />,
+                headerBackground: () => <View style={{ flex: 1, backgroundColor: '#FFFFFF' }} />,
                 drawerStyle: {
                     backgroundColor: '#ffffff',
                     width: 240,
@@ -30,14 +30,14 @@ export default function Logado() {
                         <Dashboard {...navProps} />
                     )}
                 </Screen>
-                <Screen name="Mapa">
-                    {(navProps: any) => (
-                        <Mapa {...navProps} />
-                    )}
-                </Screen>
                 <Screen name="Informações do Abrigo">
                     {(navProps: any) => (
                         <InfoAbrigo {...navProps} />
+                    )}
+                </Screen>
+                <Screen name="Mapa">
+                    {(navProps: any) => (
+                        <Mapa {...navProps} />
                     )}
                 </Screen>
                 <Screen name="Configurações">

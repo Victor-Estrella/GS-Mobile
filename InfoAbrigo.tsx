@@ -4,8 +4,8 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { View } from 'react-native';
 import { styles } from './styles/estilos';
-import { Cadastro } from './telas/Cadastro';
-import { Login } from './telas/Login';
+import EditarEstoque from './telas/EditarEstoque';
+import CadastroEstoque from './telas/CadastroEstoque';
 
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -15,19 +15,19 @@ export default function Usuario() {
     return (
         <View style={styles.container}>
             <Navigator>
-                <Screen name='Cadastro' options={{
+                <Screen name='Cadastrar Estoque' options={{
                     headerShown: false,
                     tabBarIcon: (screenProps: any) =>
                         <FontAwesome name='wpforms' size={screenProps.size} color={screenProps.color} />
                 }}>
-                    {({ navigation }: { navigation: any }) => (<Cadastro navigation={navigation} />)}
+                    {({ navigation }: { navigation: any }) => (<CadastroEstoque />)}
                 </Screen>
-                <Screen name='Login' options={{
+                <Screen name='Editar Estoque' options={{
                     headerShown: false,
                     tabBarIcon: (screenProps: any) =>
                         <FontAwesome6 name='person-shelter' size={screenProps.size} color={screenProps.color} />
                 }}>
-                    {({ navigation }: { navigation: any }) => (<Login navigation={navigation} />)}
+                    {({ navigation }: { navigation: any }) => (<EditarEstoque />)}
                 </Screen>
             </Navigator>
             <StatusBar style="auto" />
