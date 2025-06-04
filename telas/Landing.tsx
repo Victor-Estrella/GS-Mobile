@@ -26,8 +26,8 @@ export default function Landing({ navigation }: any) {
             <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.cardLanding}>
                 <Text style={styles.cardTitle}>Cadastre-se agora e fique sempre um passo à frente do risco!</Text>
                 <Image source={require('../assets/homeless.png')} style={styles.cardImg} />
-                <TouchableOpacity style={styles.buttonLanding}  onPress={() => navigation.navigate('Usuario')}>
-                    <Text style={styles.buttonText}>CADASTRAR</Text>
+                <TouchableOpacity style={styles.buttonLanding}  onPress={() => navigation.navigate('Abrigo')}>
+                    <Text style={styles.buttonText}>CADASTRAR ABRIGO</Text>
                 </TouchableOpacity>
             </LinearGradient>
         </View>

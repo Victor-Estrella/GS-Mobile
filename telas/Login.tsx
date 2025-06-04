@@ -22,8 +22,17 @@ const Login = (props: LoginProps): React.ReactElement => {
             alert("Preencha todos os campos.");
             return;
         }
+
+        if (senha.length < 8 || senha.length > 15) {
+            alert("A senha deve ter entre 8 e 15 caracteres.");
+            return;
+        }
+
         try {
-            const response = await axios.post('http://192.168.0.24:8080/usuarios/login', { email, senha });
+            const response = await axios.post('http://192.168.0.24:8080/usuarios/login', { 
+                email, 
+                senha 
+            });
             const data = response.data;
             if (data.usuario && data.usuario.chaveAbrigo) {
                 await AsyncStorage.setItem('abrigoId', data.usuario.chaveAbrigo.toString());

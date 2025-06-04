@@ -1,32 +1,58 @@
-import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/estilos';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import AlertaList from './AlertaList';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type DashboardProps = {
-    pessoasAtual: number;
-    capacidade: number;
-    alimentos: number;
-    agua: number;
-    roupas: number;
-    medicamentos: number;
-};
+export default function Dashboard() {
+    const [pessoasAtual, setPessoasAtual] = useState(0);
+    const [capacidade, setCapacidade] = useState(0);
+    const [alimentos, setAlimentos] = useState(0);
+    const [agua, setAgua] = useState(0);
+    const [roupas, setRoupas] = useState(0);
+    const [medicamentos, setMedicamentos] = useState(0);
 
-const getAlertMessage = (current: number, capacidade: number) => {
-    const percent = (current / capacidade) * 100;
-    if (percent >= 100) {
-        return { message: 'Capacidade máxima atingida!', color: '#d32f2f' };
-    }
-    if (percent >= 90) {
-        return { message: 'Atenção: Capacidade quase no limite!', color: '#f57c00' };
-    }
-    return null;
-};
+    useFocusEffect(
+        useCallback(() => {
+            const fetchData = async () => {
+                try {
+                    const abrigoId = await AsyncStorage.getItem('abrigoId');
+                    if (!abrigoId) return;
 
-export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, roupas, medicamentos}: DashboardProps) {
-    const alert = getAlertMessage(pessoasAtual, capacidade);
+                    // Busca dados do abrigo (capacidade máxima)
+                    const abrigoResp = await axios.get(`http://192.168.0.24:8080/abrigos/${abrigoId}`);
+                    setCapacidade(abrigoResp.data.capacidadePessoa ?? 0);
+
+                    // Busca dados do estoque
+                    const estoqueResp = await axios.get(`http://192.168.0.24:8080/estoques/abrigos/${abrigoId}`);
+                    const estoque = estoqueResp.data;
+
+                    setPessoasAtual(estoque.numeroPessoa ?? 0);
+                    setAgua(estoque.litrosAgua ?? 0);
+
+                    // Soma quantidades de alimentos, roupas e medicamentos
+                    setAlimentos(
+                        (estoque.alimentos || []).reduce((acc: number, item: any) => acc + (item.quantidade || 0), 0)
+                    );
+                    setRoupas(
+                        (estoque.roupas || []).reduce((acc: number, item: any) => acc + (item.quantidade || 0), 0)
+                    );
+                    setMedicamentos(
+                        (estoque.medicamentos || []).reduce((acc: number, item: any) => acc + (item.quantidade || 0), 0)
+                    );
+                } catch (e) {
+                    // Trate erros se necessário
+                }
+            };
+            fetchData();
+        }, [])
+    );
+
+    const alert = getMessagemdeAlerta(pessoasAtual, capacidade);
 
     return (
         <ScrollView contentContainerStyle={styles.bgDashboard}>
@@ -45,14 +71,14 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
                     <Image source={require('../assets/agua.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Água</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{agua}12</Text> <Text style={styles.resourceUnit}>litros</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{agua}</Text> <Text style={styles.resourceUnit}>litros</Text></Text>
                     </View>
                 </LinearGradient>
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.resourceBox}>
                     <Image source={require('../assets/alimentos.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Alimentos</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{alimentos}120</Text> <Text style={styles.resourceUnit}>kgs</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{alimentos}</Text> <Text style={styles.resourceUnit}>pacotes</Text></Text>
                     </View>
                 </LinearGradient>
             </View>
@@ -61,39 +87,44 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
                     <Image source={require('../assets/roupas.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Roupas</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{roupas}12</Text> <Text style={styles.resourceUnit}>mudas</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{roupas}</Text> <Text style={styles.resourceUnit}>mudas</Text></Text>
                     </View>
                 </LinearGradient>
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.resourceBox}>
                     <Image source={require('../assets/medicamento.png')} style={styles.resourceIcon} />
                     <View>
                         <Text style={styles.resourceLabel}>Medicamentos</Text>
-                        <Text style={styles.resourceValue}><Text style={styles.bold}>{medicamentos}12</Text> <Text style={styles.resourceUnit}>caixas</Text></Text>
+                        <Text style={styles.resourceValue}><Text style={styles.bold}>{medicamentos}</Text> <Text style={styles.resourceUnit}>caixas</Text></Text>
                     </View>
                 </LinearGradient>
             </View>
-
+            
+            {alert && (
+                <Text style={[styles.alert, { color: alert.color }]}>{alert.message}</Text>
+            )}
+            
             {/* Card Pessoas abrigadas */}
             <View style={styles.peopleCard}>
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{borderWidth: 2, borderColor: '#3BFFFF', borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                     <Text style={styles.peopleTitle}>Pessoas abrigadas</Text>
                 </LinearGradient>            
                 <LinearGradient colors={["#1E88E5", "#1E86E2", "#114B7F"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{borderWidth: 2, borderColor: '#3BFFFF', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, alignItems: 'center', justifyContent: 'center' }}>
-                    <AnimatedCircularProgress size={160} width={15} fill={(50 / 100) * 100} tintColor="#8BAA8E" backgroundColor="#E0E0E0" rotation={270} arcSweepAngle={180} lineCap="round" style={{ marginTop: 30 }}>
-                        {() => (
-                            <Text style={{ fontSize: 40, color: 'white', fontWeight: 'bold' }}>{50}</Text>
-                        )}
-                    </AnimatedCircularProgress>
+                    {capacidade > 0 && (
+                        <AnimatedCircularProgress size={160} width={15} fill={(pessoasAtual / capacidade) * 100} tintColor={getLotacao(pessoasAtual, capacidade)} backgroundColor="#E0E0E0"
+                            rotation={270} arcSweepAngle={180} lineCap="round" style={{ marginTop: 30 }}>
+                            {() => (
+                                <Text style={{ fontSize: 40, color: 'white', fontWeight: 'bold' }}>{pessoasAtual}</Text>
+                            )}
+                        </AnimatedCircularProgress>
+                    )}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 170, marginTop: -60, marginLeft: 10, marginBottom: 20 }}>
                         <Text style={{ color: 'white', fontSize: 18 }}>0</Text>
-                        <Text style={{ color: 'white', fontSize: 18 }}>100</Text>
+                        <Text style={{ color: 'white', fontSize: 18 }}>{capacidade}</Text>
                     </View>                
                 </LinearGradient>
             </View>
 
-            {alert && (
-                <Text style={[styles.alert, { color: alert.color }]}>{alert.message}</Text>
-            )}
+            
 
             {/* Mapa de alertas */}
             <View style={styles.mapPlaceholder}>
@@ -118,4 +149,25 @@ export default function Dashboard({pessoasAtual, capacidade, alimentos, agua, ro
             </View>
         </ScrollView>
     );
+}
+
+// Função de alerta (mantenha a mesma do seu código)
+function getMessagemdeAlerta(current: number, capacidade: number) {
+    const percent = (current / capacidade) * 100;
+    if (percent >= 100) {
+        return { message: 'Capacidade máxima atingida!', color: '#d32f2f' };
+    }
+    if (percent >= 90) {
+        return { message: 'Atenção: Capacidade quase no limite!', color: '#f57c00' };
+    }
+    return null;
+}
+
+function getLotacao(current: number, capacidade: number) {
+    if (!capacidade || capacidade === 0) return "#8BAA8E";
+    const percent = (current / capacidade) * 100;
+    if (percent >= 100) return "#d32f2f";
+    if (percent >= 90) return "#f57c00";
+    if (percent >= 50) return "#fbc02d";
+    return "#8BAA8E";
 }

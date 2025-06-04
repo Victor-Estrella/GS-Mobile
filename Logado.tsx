@@ -4,7 +4,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { styles } from './styles/estilos';
 import Dashboard from './telas/Dashboard';
-import InfoAbrigo from './telas/InfoAbrigo';
+import InfoAbrigo from './InfoAbrigo';
 import Mapa from './telas/Mapa';
 import Configuracoes from './telas/Configuracoes';
 
