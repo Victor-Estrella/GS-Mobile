@@ -1,4 +1,3 @@
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, TextInput, View } from "react-native";
 import { styles } from "../styles/estilos";
@@ -6,11 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Botao from "../components/Botao";
 import axios from "axios";
-
-
-interface LoginProps {
-    navigation: NavigationProp<ParamListBase>;
-}
+import LoginProps from "../types/LoginProps";
 
 const Login = (props: LoginProps): React.ReactElement => {
     const [email, setEmail] = useState("");

@@ -1,17 +1,17 @@
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, TextInput, View, ToastAndroid } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from "../styles/estilos";
 import Botao from "../components/Botao";
 import axios from "axios";
-
-interface CadastroProps {
-    navigation: NavigationProp<ParamListBase>;
-}
+import CadastroProps from "../types/CadastroProps";
 
 const Cadastro = (props: CadastroProps): React.ReactElement => {
-
+    const [nome, setNome] = useState("")
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+    const [numeroAbrigo, setNumeroAbrigo] = useState("")
+    
     const cadastrar = async () => {
         if (!nome || !email || !numeroAbrigo || !senha) {
             ToastAndroid.show('Preencha todos os campos.', ToastAndroid.SHORT);
@@ -54,11 +54,7 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
             }
         }
     };
-    
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")
-    const [numeroAbrigo, setNumeroAbrigo] = useState("")
+
     return (
         <View style={styles.bg}>
             <View style={styles.card}>
