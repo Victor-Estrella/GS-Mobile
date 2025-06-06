@@ -7,7 +7,7 @@ import Dashboard from './telas/Dashboard';
 import InfoAbrigo from './InfoAbrigo';
 import Mapa from './telas/Mapa';
 import Configuracoes from './telas/Configuracoes';
-
+import { MaterialIcons, FontAwesome5, Entypo } from '@expo/vector-icons';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -25,27 +25,46 @@ export default function Logado() {
                 },
                 drawerPosition: 'left',
             }}>
-                <Screen name="Dashboard">
+                <Screen name="Dashboard" options={{ title: 'Dashboard',
+                    drawerIcon: ({ color, size }) => (
+                        <MaterialIcons name="dashboard" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Dashboard {...navProps} />
                     )}
+
                 </Screen>
-                <Screen name="Informações do Abrigo">
+                <Screen name="Informações do Abrigo" options={{ title: 'Estoque do Abrigo',
+                    drawerIcon: ({ color, size }) => (
+                        <MaterialIcons name="inventory" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <InfoAbrigo {...navProps} />
                     )}
+
                 </Screen>
-                <Screen name="Mapa">
+                <Screen name="Mapa" options={{ title: 'Mapa',
+                    drawerIcon: ({ color, size }) => (
+                        <Entypo name="map" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Mapa {...navProps} />
                     )}
+
                 </Screen>
-                <Screen name="Configurações">
+                <Screen name="Configurações" options={{ title: 'Configurações',
+                    drawerIcon: ({ color, size }) => (
+                        <FontAwesome5 name="cog" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Configuracoes {...navProps} />
                     )}
-                </Screen>
 
+                </Screen>
             </Navigator>
             <StatusBar style="auto" />
         </View>

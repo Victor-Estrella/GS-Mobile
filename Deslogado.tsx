@@ -7,7 +7,7 @@ import Abrigo from './telas/CadastroAbrigo';
 import Mapa from './telas/Mapa';
 import Usuario from './Usuario';
 import Landing from './telas/Landing';
-
+import { FontAwesome5, Entypo, Ionicons, FontAwesome6 } from '@expo/vector-icons';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
@@ -29,25 +29,45 @@ export default function Deslogado({ navigation }: any) {
                 },
                 drawerPosition: 'left',
             }}>
-                <Screen name="Landing" options={{ title: 'SafeHub' }}>
+                <Screen name="Landing" options={{ title: 'SafeHub',
+                    drawerIcon: ({ color, size }) => (
+                        <Ionicons name="shield" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Landing {...navProps} />
                     )}
+
                 </Screen>
-                <Screen name="Usuario">
+                <Screen name="Usuario" options={{ title: 'Usuário', 
+                    drawerIcon: ({ color, size }) => ( 
+                        <FontAwesome5 name="user" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Usuario {...navProps} SucessoLogin={SucessoLogin} />
                     )}
+
                 </Screen>
-                <Screen name="Abrigo">
+                <Screen name="Abrigo" options={{ title: 'Abrigo',
+                    drawerIcon: ({ color, size }) => (
+                        <FontAwesome6 name="house-chimney" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Abrigo {...navProps} />
                     )}
+
                 </Screen>
-                <Screen name="Mapa">
+                <Screen name="Mapa" options={{ title: 'Mapa',
+                    drawerIcon: ({ color, size }) => (
+                        <Entypo name="map" size={size} color={color} />
+                    )}}>
+
                     {(navProps: any) => (
                         <Mapa {...navProps} />
                     )}
+                    
                 </Screen>
             </Navigator>
             <StatusBar style="auto" />
