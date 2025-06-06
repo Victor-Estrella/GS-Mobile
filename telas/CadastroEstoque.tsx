@@ -50,7 +50,7 @@ export default function CadastroEstoque() {
                 ToastAndroid.show("ID do abrigo não encontrado. Faça login novamente.", ToastAndroid.SHORT);
                 return;
             }
-            const resp = await axios.get(`http://192.168.0.24:8080/abrigos/${abrigoId}`);
+            const resp = await axios.get(`https://safehub-gs.onrender.com/abrigos/${abrigoId}`);
             capacidadeAbrigo = Number(resp.data.capacidadePessoa) || 0;
         } catch {
             ToastAndroid.show("Erro ao buscar capacidade do abrigo.", ToastAndroid.SHORT);
@@ -78,7 +78,7 @@ export default function CadastroEstoque() {
                 chaveAbrigo: parseInt(abrigoId)
             };
 
-            await axios.post(`http://192.168.0.24:8080/estoques/abrigos/${abrigoId}`, body);
+            await axios.post(`https://safehub-gs.onrender.com/estoques/abrigos/${abrigoId}`, body);
 
             ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.SHORT);
 
