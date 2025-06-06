@@ -35,10 +35,8 @@ const geocodeAddress = async (endereco: string) => {
 // Função para cor do marcador conforme ocupação
 function getPinColor(ocupacao: number, capacidade: number) {
     const cap = Number(capacidade);
-    console.log('ocupacao:', ocupacao, 'capacidade:', capacidade, 'cap:', cap);
     if (!cap || cap <= 0) return "green";
     const percent = ocupacao / cap;
-    console.log('percent:', percent);
     if (percent >= 0.8) return "red";
     if (percent >= 0.5) return "yellow";
     return "green";  
@@ -55,7 +53,7 @@ export default function Mapa() {
             const buscarAbrigos = async () => {
                 try {
                     // Busca todos os abrigos do backend
-                    const response = await axios.get('http://192.168.0.24:8080/abrigos');
+                    const response = await axios.get('https://safehub-gs.onrender.com/abrigos');
                     const abrigosApi = response.data;
 
                     // Para cada abrigo, busca latitude/longitude e ocupação pelo estoque
@@ -65,7 +63,7 @@ export default function Mapa() {
                                 const coords = await geocodeAddress(abrigo.localizacao);
 
                                 // Busca ocupação real do estoque
-                                const estoqueResp = await axios.get(`http://192.168.0.24:8080/estoques/abrigos/${abrigo.idCadastroAbrigo}`);
+                                const estoqueResp = await axios.get(`https://safehub-gs.onrender.com/estoques/abrigos/${abrigo.idCadastroAbrigo}`);
                                 const ocupacao = estoqueResp.data.numeroPessoa ?? 0;
 
                                 return {

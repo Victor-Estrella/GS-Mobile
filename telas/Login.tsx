@@ -24,7 +24,7 @@ const Login = (props: LoginProps): React.ReactElement => {
         }
 
         try {
-            const response = await axios.post('http://192.168.0.24:8080/usuarios/login', { 
+            const response = await axios.post('https://safehub-gs.onrender.com/usuarios/login', { 
                 email, 
                 senha 
             });

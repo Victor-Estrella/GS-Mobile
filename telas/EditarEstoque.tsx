@@ -18,7 +18,7 @@ export default function EditarEstoque() {
             try {
                 const abrigoId = await AsyncStorage.getItem('abrigoId');
                 if (!abrigoId) return;
-                const response = await axios.get(`http://192.168.0.24:8080/estoques/abrigos/${abrigoId}`);
+                const response = await axios.get(`https://safehub-gs.onrender.com/estoques/abrigos/${abrigoId}`);
                 const estoque = response.data;
                 if (estoque) {
                     setPessoas(estoque.numeroPessoa?.toString() || '');
@@ -65,7 +65,7 @@ export default function EditarEstoque() {
                 ToastAndroid.show("ID do abrigo não encontrado. Faça login novamente.", ToastAndroid.SHORT);
                 return;
             }
-            const resp = await axios.get(`http://192.168.0.24:8080/abrigos/${abrigoId}`);
+            const resp = await axios.get(`https://safehub-gs.onrender.com/abrigos/${abrigoId}`);
             capacidadeAbrigo = Number(resp.data.capacidadePessoa) || 0;
         } catch {
             ToastAndroid.show("Erro ao buscar capacidade do abrigo.", ToastAndroid.SHORT);
@@ -104,7 +104,7 @@ export default function EditarEstoque() {
                 chaveAbrigo: parseInt(abrigoId)
             };
 
-            await axios.patch(`http://192.168.0.24:8080/estoques/abrigos/${abrigoId}`, body);
+            await axios.patch(`https://safehub-gs.onrender.com/estoques/abrigos/${abrigoId}`, body);
 
             ToastAndroid.show('Estoque atualizado com sucesso!', ToastAndroid.SHORT);
         } catch (error) {
@@ -129,7 +129,7 @@ export default function EditarEstoque() {
                                 ToastAndroid.show("ID do abrigo não encontrado.", ToastAndroid.SHORT);
                                 return;
                             }
-                            await axios.delete(`http://192.168.0.24:8080/estoques/abrigo/${abrigoId}`);
+                            await axios.delete(`https://safehub-gs.onrender.com/estoques/abrigo/${abrigoId}`);
                             ToastAndroid.show('Estoque excluído com sucesso!', ToastAndroid.SHORT);
                             // Limpa os campos após exclusão
                             setPessoas('');

@@ -32,7 +32,7 @@ export default function CadastroAbrigo() {
                 nomeResponsavel: responsaveis,
                 localizacao
             };
-            const response = await axios.post('http://192.168.0.24:8080/abrigos', novoAbrigo);
+            const response = await axios.post('https://safehub-gs.onrender.com/abrigos', novoAbrigo);
             setAbrigoId(response.data.idCadastroAbrigo?.toString() || '');
             ToastAndroid.show('Cadastro realizado com sucesso!', ToastAndroid.LONG);
         } catch (e) {

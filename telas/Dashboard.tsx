@@ -24,11 +24,11 @@ export default function Dashboard() {
                     if (!abrigoId) return;
 
                     // Busca dados do abrigo (capacidade máxima)
-                    const abrigoResp = await axios.get(`http://192.168.0.24:8080/abrigos/${abrigoId}`);
+                    const abrigoResp = await axios.get(`https://safehub-gs.onrender.com/abrigos/${abrigoId}`);
                     setCapacidade(abrigoResp.data.capacidadePessoa ?? 0);
 
                     // Busca dados do estoque
-                    const estoqueResp = await axios.get(`http://192.168.0.24:8080/estoques/abrigos/${abrigoId}`);
+                    const estoqueResp = await axios.get(`https://safehub-gs.onrender.com/estoques/abrigos/${abrigoId}`);
                     const estoque = estoqueResp.data;
 
                     setPessoasAtual(estoque.numeroPessoa ?? 0);
@@ -53,6 +53,7 @@ export default function Dashboard() {
     );
 
     const alert = getMessagemdeAlerta(pessoasAtual, capacidade);
+    const recursosAviso = getAvisoRecursos(agua, alimentos, roupas, medicamentos);
 
     return (
         <ScrollView contentContainerStyle={styles.bgDashboard}>
@@ -64,6 +65,17 @@ export default function Dashboard() {
                     <Text style={styles.logoBoard}>BOARD</Text>
                 </Text>
             </View>
+
+            {/* Avisos de recursos */}
+            {recursosAviso.length > 0 && (
+                <View style={{ marginHorizontal: 16, marginBottom: 8 }}>
+                    {recursosAviso.map((aviso, idx) => (
+                        <Text key={idx} style={[styles.alert, { color: aviso.color, textAlign: 'center' }]}>
+                            {aviso.message}
+                        </Text>
+                    ))}
+                </View>
+            )}
 
             {/* Recursos */}
             <View style={styles.resourcesRow}>
@@ -170,4 +182,28 @@ function getLotacao(current: number, capacidade: number) {
     if (percent >= 90) return "#f57c00";
     if (percent >= 50) return "#fbc02d";
     return "#8BAA8E";
+}
+
+function getAvisoRecursos(agua: number, alimentos: number, roupas: number, medicamentos: number) {
+    const avisos: { message: string; color: string }[] = [];
+
+    // Limiares para "perto de acabar"
+    const LIMIAR_AGUA = 10; // litros
+    const LIMIAR_ALIMENTO = 5; // pacotes
+    const LIMIAR_ROUPA = 5; // mudas
+    const LIMIAR_MEDICAMENTO = 2; // caixas
+
+    if (agua === 0) avisos.push({ message: "Água esgotada!", color: "#d32f2f" });
+    else if (agua <= LIMIAR_AGUA) avisos.push({ message: "Água quase acabando!", color: "#f57c00" });
+
+    if (alimentos === 0) avisos.push({ message: "Alimentos esgotados!", color: "#d32f2f" });
+    else if (alimentos <= LIMIAR_ALIMENTO) avisos.push({ message: "Alimentos quase acabando!", color: "#f57c00" });
+
+    if (roupas === 0) avisos.push({ message: "Roupas esgotadas!", color: "#d32f2f" });
+    else if (roupas <= LIMIAR_ROUPA) avisos.push({ message: "Roupas quase acabando!", color: "#f57c00" });
+
+    if (medicamentos === 0) avisos.push({ message: "Medicamentos esgotados!", color: "#d32f2f" });
+    else if (medicamentos <= LIMIAR_MEDICAMENTO) avisos.push({ message: "Medicamentos quase acabando!", color: "#f57c00" });
+
+    return avisos;
 }

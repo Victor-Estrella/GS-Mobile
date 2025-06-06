@@ -34,7 +34,7 @@ export default function Configuracoes() {
 
             let senhaParaEnviar = senha;
             if (!senha && (nome.trim() || email.trim())) {
-                const usuarioAtual = await axios.get(`http://192.168.0.24:8080/usuarios/${idUsuario}`);
+                const usuarioAtual = await axios.get(`https://safehub-gs.onrender.com/usuarios/${idUsuario}`);
                 senhaParaEnviar = usuarioAtual.data.senha;
             }
 
@@ -44,7 +44,7 @@ export default function Configuracoes() {
             let localizacaoParaEnviar = localizacao;
             let nomeResponsavelParaEnviar = nomeResponsavel;
             if (!nomeAbrigo.trim() || !capacidade.trim() || !localizacao.trim() || !nomeResponsavel.trim()) {
-                const abrigoAtual = await axios.get(`http://192.168.0.24:8080/abrigos/${idAbrigo}`);
+                const abrigoAtual = await axios.get(`https://safehub-gs.onrender.com/abrigos/${idAbrigo}`);
                 if (!nomeAbrigo.trim()) nomeAbrigoParaEnviar = abrigoAtual.data.nomeAbrigo || "";
                 if (!capacidade.trim()) capacidadeParaEnviar = abrigoAtual.data.capacidadePessoa?.toString() || "";
                 if (!localizacao.trim()) localizacaoParaEnviar = abrigoAtual.data.localizacao || "";
@@ -53,7 +53,7 @@ export default function Configuracoes() {
 
             // Só envia PUT do usuário se algum campo foi preenchido
             if (nome.trim() || email.trim() || senha.trim()) {
-                await axios.put(`http://192.168.0.24:8080/usuarios/${idUsuario}`, {
+                await axios.put(`https://safehub-gs.onrender.com/usuarios/${idUsuario}`, {
                     ...(nome.trim() && { nome }),
                     ...(email.trim() && { email }),
                     ...(senhaParaEnviar && { senha: senhaParaEnviar }),
@@ -63,7 +63,7 @@ export default function Configuracoes() {
 
             // Só envia PUT do abrigo se algum campo foi preenchido
             if (nomeAbrigo.trim() || capacidade.trim() || localizacao.trim() || nomeResponsavel.trim()) {
-                await axios.put(`http://192.168.0.24:8080/abrigos/${idAbrigo}`, {
+                await axios.put(`https://safehub-gs.onrender.com/abrigos/${idAbrigo}`, {
                     nomeAbrigo: nomeAbrigoParaEnviar,
                     capacidadePessoa: Number(capacidadeParaEnviar),
                     localizacao: localizacaoParaEnviar,
@@ -103,7 +103,7 @@ export default function Configuracoes() {
                                 ToastAndroid.show("ID do usuário não encontrado.", ToastAndroid.SHORT);
                                 return;
                             }
-                            await axios.delete(`http://192.168.0.24:8080/usuarios/${idUsuario}`);
+                            await axios.delete(`https://safehub-gs.onrender.com/usuarios/${idUsuario}`);
                             ToastAndroid.show("Sua conta foi excluída com sucesso.", ToastAndroid.SHORT);
                             navigation.navigate("Deslogado");
                         } catch (error) {
@@ -132,9 +132,9 @@ export default function Configuracoes() {
                                 ToastAndroid.show("ID do abrigo ou usuário não encontrado.", ToastAndroid.SHORT);
                                 return;
                             }
-                            await axios.delete(`http://192.168.0.24:8080/estoques/abrigo/${idAbrigo}`);
-                            await axios.delete(`http://192.168.0.24:8080/usuarios/${idUsuario}`);
-                            await axios.delete(`http://192.168.0.24:8080/abrigos/${idAbrigo}`);
+                            await axios.delete(`https://safehub-gs.onrender.com/estoques/abrigo/${idAbrigo}`);
+                            await axios.delete(`https://safehub-gs.onrender.com/usuarios/${idUsuario}`);
+                            await axios.delete(`https://safehub-gs.onrender.com/abrigos/${idAbrigo}`);
                             ToastAndroid.show("Abrigo, estoque e conta excluídos com sucesso.", ToastAndroid.LONG);
                             navigation.navigate("Deslogado");
                         } catch (error) {

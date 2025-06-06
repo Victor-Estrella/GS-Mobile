@@ -24,7 +24,7 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
 
         // Verifica se o e-mail já existe
         try {
-            const verificaEmail = await axios.get(`http://192.168.0.24:8080/usuarios`);
+            const verificaEmail = await axios.get(`https://safehub-gs.onrender.com/usuarios`);
             const usuarios = verificaEmail.data;
             const emailJaExiste = Array.isArray(usuarios) && usuarios.some((u) => u.email === email);
             if (emailJaExiste) {
@@ -36,7 +36,7 @@ const Cadastro = (props: CadastroProps): React.ReactElement => {
         }
 
         try {
-            await axios.post('http://192.168.0.24:8080/usuarios', {
+            await axios.post('https://safehub-gs.onrender.com/usuarios', {
                 nome,
                 email,
                 senha,
