@@ -58,9 +58,8 @@ O **SafeHub** é um aplicativo mobile para gestão de abrigos emergenciais, faci
    ```
 2. Inicie o projeto:
    ```
-   npx expo start
+   npm run start
    ```
-3. Certifique-se de que o backend está rodando em `http://192.168.0.24:8080` ou ajuste a URL conforme sua rede.
 
 ## 👥 Integrantes
 
@@ -69,5 +68,9 @@ O **SafeHub** é um aplicativo mobile para gestão de abrigos emergenciais, faci
 - Victor Henrique Estrella Carracci - RM:556206 - Turma: 2TDSPH
 
 ---
+
+## 📺🔴 Link do Vídeo
+https://youtu.be/BVbVajDElRg
+
 
 Feito com 💙 para ajudar na gestão de abrigos e salvar vidas!
